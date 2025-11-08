@@ -1,7 +1,8 @@
 from .user import UserBase, UserCreate, UserUpdate, UserInDB, UserResponse
 from .account import (
     AccountBase, AccountCreate, AccountUpdate, AccountLogin,
-    AccountInDB, AccountResponse, Token, TokenData
+    AccountInDB, AccountResponse, Token, TokenData,
+    ChangePasswordRequest, RegisterRequest
 )
 from .destination import (
     DestinationBase, DestinationCreate, DestinationUpdate,
@@ -22,6 +23,7 @@ __all__ = [
     # Account
     "AccountBase", "AccountCreate", "AccountUpdate", "AccountLogin",
     "AccountInDB", "AccountResponse", "Token", "TokenData",
+    "ChangePasswordRequest", "RegisterRequest",
     # Destination
     "DestinationBase", "DestinationCreate", "DestinationUpdate",
     "DestinationInDB", "DestinationResponse",

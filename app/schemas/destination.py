@@ -17,7 +17,7 @@ class DestinationBase(BaseModel):
 
 class DestinationCreate(DestinationBase):
     """Schema for creating a destination"""
-    company_id: Optional[int] = None
+    pass
 
 
 class DestinationUpdate(BaseModel):
@@ -35,7 +35,6 @@ class DestinationUpdate(BaseModel):
 class DestinationInDB(DestinationBase):
     """Schema for destination in database"""
     destination_id: int
-    company_id: Optional[int]
     created_date: datetime
     updated_date: datetime
     is_active: bool

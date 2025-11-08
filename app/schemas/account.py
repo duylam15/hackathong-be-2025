@@ -52,3 +52,21 @@ class TokenData(BaseModel):
     """Schema for token data"""
     account_id: Optional[int] = None
     username: Optional[str] = None
+
+
+class ChangePasswordRequest(BaseModel):
+    """Schema for changing password"""
+    old_password: str = Field(..., min_length=6)
+    new_password: str = Field(..., min_length=6)
+
+
+class RegisterRequest(BaseModel):
+    """Schema for registration"""
+    # User info
+    full_name: str
+    email: str
+    phone: Optional[str] = None
+    # Account info
+    username: str = Field(..., min_length=3)
+    password: str = Field(..., min_length=6)
+    role: str = "user"

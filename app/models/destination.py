@@ -8,7 +8,6 @@ class Destination(Base):
     __tablename__ = "destination"
     
     destination_id = Column(Integer, primary_key=True, index=True)
-    company_id = Column(Integer, ForeignKey("company.company_id"))
     destination_name = Column(String, nullable=False, index=True)
     location_address = Column(String)
     latitude = Column(Numeric(10, 8))
@@ -21,7 +20,6 @@ class Destination(Base):
     is_active = Column(Boolean, default=True)
     
     # Relationships
-    company = relationship("Company", back_populates="destinations")
     category_mappings = relationship("DestinationCategoryMapping", back_populates="destination")
     attributes = relationship("DestinationAttribute", back_populates="destination")
     descriptions = relationship("DestinationDescription", back_populates="destination")

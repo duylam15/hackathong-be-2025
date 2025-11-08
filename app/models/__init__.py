@@ -1,7 +1,6 @@
 from app.db.database import Base
 from .user import User
 from .account import Account
-from .company import Company
 from .destination import (
     Destination,
     DestinationCategory,
@@ -15,7 +14,6 @@ __all__ = [
     "Base",
     "User",
     "Account",
-    "Company",
     "Destination",
     "DestinationCategory",
     "DestinationCategoryMapping",

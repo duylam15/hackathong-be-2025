@@ -2,7 +2,9 @@
 Script to initialize the database with sample data
 """
 from app.db.database import engine, SessionLocal
-from app.models import Base, User, Company, Destination, DestinationCategory
+from app.models import Base, User, Destination, DestinationCategory
+from app.models.account import Account
+from app.core.security import get_password_hash
 from datetime import datetime, date
 
 
@@ -41,17 +43,26 @@ def seed_data():
         db.commit()
         print("✓ Created sample users")
         
-        # Create sample company
-        company = Company(
-            company_name="Vietnam Tourism",
-            address="123 Nguyen Hue, Ho Chi Minh City",
-            phone="0281234567",
-            email="info@vietnam-tourism.com",
-            status="active"
-        )
-        db.add(company)
+        # Create sample accounts
+        accounts = [
+            Account(
+                user_id=users[0].id,
+                usename="johndoe",
+                password=get_password_hash("password123"),
+                role="user",
+                status="active"
+            ),
+            Account(
+                user_id=users[1].id,
+                usename="janesmith",
+                password=get_password_hash("password123"),
+                role="admin",
+                status="active"
+            )
+        ]
+        db.add_all(accounts)
         db.commit()
-        print("✓ Created sample company")
+        print("✓ Created sample accounts")
         
         # Create sample categories
         categories = [
@@ -78,7 +89,6 @@ def seed_data():
         # Create sample destinations
         destinations = [
             Destination(
-                company_id=company.company_id,
                 destination_name="Notre Dame Cathedral",
                 location_address="01 Cong xa Paris, Ben Nghe Ward, District 1, HCMC",
                 latitude=10.7797,
@@ -89,7 +99,6 @@ def seed_data():
                 is_active=True
             ),
             Destination(
-                company_id=company.company_id,
                 destination_name="Ben Thanh Market",
                 location_address="Le Loi, Ben Thanh Ward, District 1, HCMC",
                 latitude=10.7725,
