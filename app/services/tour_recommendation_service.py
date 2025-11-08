@@ -193,6 +193,151 @@ class DistanceCalculator:
 
 
 # ==============================================================================
+# HEURISTIC OPTIMIZER - Thuật toán tham lam đơn giản (Fallback)
+# ==============================================================================
+
+class HeuristicOptimizer:
+    """
+    Lớp tối ưu hóa lộ trình sử dụng thuật toán tham lam (greedy heuristic)
+    Được dùng khi OR-Tools không tìm được solution
+    """
+    
+    def __init__(self, destinations: List[Dict], user: Dict, start_location: Dict):
+        """
+        Args:
+            destinations: Danh sách địa điểm đã có điểm
+            user: User profile
+            start_location: Điểm khởi hành
+        """
+        self.user = user
+        self.start_location = start_location
+        self.destinations = destinations
+        
+        # Constraints
+        self.max_time = user.get('time_available', 8) * 60  # Convert to minutes
+        self.max_budget = user.get('budget', float('inf'))
+        self.max_locations = user.get('max_locations', 5)
+    
+    def optimize_greedy(self) -> Dict:
+        """
+        Thuật toán tham lam: Chọn địa điểm gần nhất có điểm cao
+        
+        Strategy:
+        1. Bắt đầu từ start location
+        2. Chọn địa điểm chưa thăm có score/distance ratio cao nhất
+        3. Kiểm tra constraints (time, budget)
+        4. Lặp lại cho đến khi không thêm được địa điểm nào
+        
+        Returns:
+            Dict với route đơn giản
+        """
+        route = []
+        visited = set()
+        current_location = self.start_location
+        
+        total_time = 0
+        total_distance = 0.0
+        total_score = 0.0
+        total_cost = 0
+        
+        print(f"🔄 Fallback to Heuristic Optimizer (Greedy Algorithm)")
+        
+        while len(route) < self.max_locations:
+            best_dest = None
+            best_metric = -1
+            best_travel_time = 0
+            best_distance = 0
+            
+            # Tìm địa điểm tốt nhất chưa thăm
+            for dest in self.destinations:
+                dest_id = dest.get('id')
+                
+                if dest_id in visited:
+                    continue
+                
+                # Tính khoảng cách và thời gian
+                distance = DistanceCalculator.haversine_distance(
+                    current_location['latitude'],
+                    current_location['longitude'],
+                    dest['latitude'],
+                    dest['longitude']
+                )
+                
+                travel_time = DistanceCalculator.calculate_travel_time(distance)
+                visit_time = dest.get('visit_time', 60)
+                price = dest.get('price', 0)
+                score = dest.get('score', 0)
+                
+                # Kiểm tra constraints
+                new_time = total_time + travel_time + visit_time
+                new_cost = total_cost + price
+                
+                if new_time > self.max_time or new_cost > self.max_budget:
+                    continue
+                
+                # Tính metric: score/distance (ưu tiên gần + điểm cao)
+                # Thêm penalty cho khoảng cách xa
+                distance_penalty = max(1, distance / 10)  # Divide by 10km
+                metric = score / distance_penalty
+                
+                if metric > best_metric:
+                    best_metric = metric
+                    best_dest = dest
+                    best_travel_time = travel_time
+                    best_distance = distance
+            
+            # Nếu không tìm được địa điểm nào thỏa mãn -> dừng
+            if best_dest is None:
+                break
+            
+            # Thêm địa điểm vào route
+            visited.add(best_dest['id'])
+            
+            route.append({
+                'id': best_dest['id'],
+                'name': best_dest['name'],
+                'type': best_dest['type'],
+                'latitude': best_dest['latitude'],
+                'longitude': best_dest['longitude'],
+                'location_address': best_dest.get('location_address'),
+                'price': best_dest['price'],
+                'visit_time': best_dest['visit_time'],
+                'travel_time': best_travel_time,
+                'score': best_dest['score'],
+                'opening_hours': best_dest.get('opening_hours'),
+                'facilities': best_dest.get('facilities', []),
+                'images': best_dest.get('images', [])
+            })
+            
+            # Update totals
+            total_time += best_travel_time + best_dest['visit_time']
+            total_distance += best_distance
+            total_cost += best_dest['price']
+            total_score += best_dest['score']
+            
+            # Update current location
+            current_location = best_dest
+        
+        if not route:
+            return {
+                'success': False,
+                'message': 'Không thể tạo tour với constraints hiện tại (quá chặt)'
+            }
+        
+        return {
+            'success': True,
+            'route': route,
+            'total_locations': len(route),
+            'total_time': total_time,
+            'total_distance': round(total_distance, 2),
+            'total_score': round(total_score, 3),
+            'total_cost': total_cost,
+            'avg_score': round(total_score / len(route), 3) if route else 0,
+            'optimizer_used': 'heuristic'  # Đánh dấu dùng heuristic
+        }
+
+
+# ==============================================================================
 # ROUTE OPTIMIZER - Tối ưu lộ trình với OR-Tools
 # ==============================================================================
 
@@ -329,7 +474,9 @@ class RouteOptimizer:
         solution = routing.SolveWithParameters(search_parameters)
         
         if solution:
-            return self._extract_solution(manager, routing, solution)
+            result = self._extract_solution(manager, routing, solution)
+            result['optimizer_used'] = 'ortools'  # Đánh dấu dùng OR-Tools
+            return result
         else:
             return {
                 'success': False,
@@ -414,7 +561,7 @@ class TourRecommendationService:
         start_location: Optional[Dict] = None
     ) -> Dict:
         """
-        Tạo gợi ý tour cho user
+        Tạo gợi ý tour cho user với fallback mechanism
         
         Args:
             db: Database session
@@ -445,24 +592,29 @@ class TourRecommendationService:
         destinations_dict = [dest.to_dict() for dest in destinations]
         print(f"DEBUG: Found {len(destinations_dict)} destinations")
         
-        # 2. Tính điểm cho từng địa điểm
-        scored_destinations = ScoringEngine.rank_destinations(
-            user_profile,
-            destinations_dict,
-            top_n=min(8, len(destinations_dict))  # Giảm xuống 8 để dễ optimize hơn
-        )
-        print(f"DEBUG: Scored destinations: {len(scored_destinations)}")
+        # 1.5. Filter destinations hợp lệ (tọa độ ở Việt Nam, visit_time hợp lý)
+        valid_destinations = []
+        for dest in destinations_dict:
+            lat = dest.get('latitude', 0)
+            lon = dest.get('longitude', 0)
+            visit_time = dest.get('visit_time', 0)
+            
+            # Vietnam: latitude 8-24, longitude 102-110
+            if (8 <= lat <= 24 and 102 <= lon <= 110 and 
+                visit_time > 0 and visit_time <= 600):  # Max 10 hours per location
+                valid_destinations.append(dest)
+            else:
+                print(f"DEBUG: Filtered out '{dest.get('name')}' - Invalid location ({lat}, {lon}) or visit_time ({visit_time})")
         
-        # 3. Prepare destinations for routing
-        routing_destinations = []
-        for dest, score in scored_destinations:
-            dest_copy = dest.copy()
-            dest_copy['score'] = score
-            routing_destinations.append(dest_copy)
+        print(f"DEBUG: Valid destinations after filtering: {len(valid_destinations)}")
         
-        print(f"DEBUG: Routing destinations: {len(routing_destinations)}")
+        if not valid_destinations:
+            return {
+                'success': False,
+                'message': 'Không có địa điểm hợp lệ trong hệ thống'
+            }
         
-        # 4. Set default start location nếu không có
+        # 4. Set default start location nếu không có (Sài Gòn center)
         if not start_location:
             start_location = {
                 'id': 0,
@@ -473,9 +625,79 @@ class TourRecommendationService:
                 'price': 0
             }
         
-        # 5. Optimize route
+        # 2. Filter theo khoảng cách (chỉ giữ địa điểm trong bán kính hợp lý)
+        start_lat = start_location.get('latitude', 10.7769)
+        start_lon = start_location.get('longitude', 106.7009)
+        
+        nearby_destinations = []
+        max_distance_km = 50  # Bán kính 50km
+        
+        for dest in valid_destinations:
+            dist = DistanceCalculator.haversine_distance(
+                start_lat, start_lon,
+                dest['latitude'], dest['longitude']
+            )
+            if dist <= max_distance_km:
+                nearby_destinations.append(dest)
+            else:
+                print(f"DEBUG: Filtered out '{dest['name']}' - Too far ({dist:.1f}km)")
+        
+        print(f"DEBUG: Nearby destinations: {len(nearby_destinations)}")
+        
+        if not nearby_destinations:
+            # Nếu không có địa điểm gần, mở rộng bán kính
+            print(f"DEBUG: No nearby destinations, expanding radius to 100km")
+            max_distance_km = 100
+            for dest in valid_destinations:
+                dist = DistanceCalculator.haversine_distance(
+                    start_lat, start_lon,
+                    dest['latitude'], dest['longitude']
+                )
+                if dist <= max_distance_km:
+                    nearby_destinations.append(dest)
+        
+        if not nearby_destinations:
+            return {
+                'success': False,
+                'message': f'Không có địa điểm nào trong bán kính {max_distance_km}km'
+            }
+        
+        # 3. Tính điểm và chọn top destinations
+        max_locations = min(user_profile.get('max_locations', 5), 6)  # Max 6 locations
+        scored_destinations = ScoringEngine.rank_destinations(
+            user_profile,
+            nearby_destinations,
+            top_n=max_locations
+        )
+        print(f"DEBUG: Scored destinations: {len(scored_destinations)}")
+        
+        # Prepare destinations for routing
+        routing_destinations = []
+        for dest, score in scored_destinations:
+            dest_copy = dest.copy()
+            dest_copy['score'] = score
+            routing_destinations.append(dest_copy)
+        
+        print(f"DEBUG: Routing destinations: {len(routing_destinations)}")
+        
+        # 5. Try OR-Tools optimizer first
+        print(f"DEBUG: Attempting OR-Tools optimization...")
         optimizer = RouteOptimizer(routing_destinations, user_profile, start_location)
         result = optimizer.optimize()
+        
+        # 6. Fallback to heuristic if OR-Tools fails
+        if not result.get('success'):
+            print(f"DEBUG: OR-Tools failed, falling back to Heuristic optimizer...")
+            heuristic_optimizer = HeuristicOptimizer(
+                routing_destinations, 
+                user_profile, 
+                start_location
+            )
+            result = heuristic_optimizer.optimize_greedy()
+            
+            # Thêm note cho user biết đang dùng fallback
+            if result.get('success'):
+                result['note'] = 'Sử dụng thuật toán tối ưu đơn giản (Greedy). Lộ trình có thể chưa tối ưu nhất.'
         
         return result
     

@@ -91,6 +91,8 @@ class TourRecommendation(BaseModel):
     total_cost: int = 0
     avg_score: float = 0.0
     message: Optional[str] = None
+    optimizer_used: Optional[str] = None  # 'ortools' or 'heuristic'
+    note: Optional[str] = None  # Note cho user về optimizer được dùng
     
     class Config:
         json_schema_extra = {

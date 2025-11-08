@@ -2,6 +2,10 @@
 Tour Recommendation Endpoints
 """
 
+"""
+Tour Recommendation Endpoints
+"""
+import logging
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
@@ -17,6 +21,8 @@ from app.schemas.tour import (
 
 router = APIRouter()
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
 
 @router.post("/recommend", response_model=TourRecommendation)
 def get_tour_recommendation(
@@ -25,13 +31,9 @@ def get_tour_recommendation(
 ):
     """
     Tạo gợi ý tour dựa trên user profile
-    
-    - **user_profile**: Thông tin người dùng (type, preference, budget, time_available, max_locations)
-    - **start_location**: Điểm khởi hành (optional)
-    
-    Returns:
-    - Lộ trình tối ưu với danh sách địa điểm, thời gian, chi phí, điểm số
     """
+    logger.debug("📩 Nhận request tạo tour gợi ý")
+
     # Convert StartLocation to dict
     start_loc_dict = None
     if request.start_location:
@@ -43,20 +45,27 @@ def get_tour_recommendation(
             'visit_time': 0,
             'price': 0
         }
-    
+        logger.debug(f"🏁 Start location: {start_loc_dict}")
+    else:
+        logger.debug("⚠️ Không có start_location trong request")
+
     # Convert UserProfile to dict
     user_dict = request.user_profile.model_dump()
-    
-    # Get recommendations
+    logger.debug(f"👤 User profile: {user_dict}")
+
+    # Gọi service
     result = TourRecommendationService.get_tour_recommendations(
         db=db,
         user_profile=user_dict,
         start_location=start_loc_dict
     )
-    
+    logger.debug(f"🧠 Kết quả gợi ý: {result}")
+
     if not result['success']:
+        logger.error(f"❌ Lỗi tạo tour: {result.get('message')}")
         raise HTTPException(status_code=400, detail=result.get('message', 'Không thể tạo tour'))
-    
+
+    logger.info("✅ Tạo tour gợi ý thành công")
     return result
 
 
