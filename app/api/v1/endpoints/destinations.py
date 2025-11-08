@@ -136,6 +136,7 @@ def create_destination(
     - **opening_hours**: Opening hours (e.g., "08:00-17:00")
     - **visit_time**: Recommended visit duration in minutes
     - **facilities**: List of facilities
+    - **images**: List of image URLs (e.g., ["https://example.com/img1.jpg", "https://example.com/img2.jpg"])
     - **extra_info**: Additional information (JSON object)
     """
     try:

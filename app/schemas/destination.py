@@ -17,6 +17,7 @@ class DestinationBase(BaseModel):
     visit_time: Optional[int] = None  # Thời gian tham quan (phút)
     facilities: List[str] = []  # ["parking", "restroom", "wifi", ...]
     extra_info: Dict[str, Any] = {}  # {"rating": 4.6, "reviews": 8500}
+    images: List[str] = []  # ["https://example.com/img1.jpg", "https://example.com/img2.jpg"]
 
 
 class DestinationCreate(DestinationBase):
@@ -37,6 +38,7 @@ class DestinationUpdate(BaseModel):
     visit_time: Optional[int] = None
     facilities: Optional[List[str]] = None
     extra_info: Optional[Dict[str, Any]] = None
+    images: Optional[List[str]] = None
     is_active: Optional[bool] = None
 
 

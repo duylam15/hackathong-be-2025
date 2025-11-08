@@ -31,6 +31,9 @@ class Destination(Base):
     facilities = Column(ARRAY(String), default=[])  # ["parking", "restroom", "wifi", ...]
     extra_info = Column(JSON, default={})  # {"rating": 4.6, "reviews": 8500} - renamed from 'metadata' to avoid SQLAlchemy conflict
     
+    # Images - Multiple image URLs for the destination
+    images = Column(ARRAY(String), default=[])  # ["https://example.com/image1.jpg", "https://example.com/image2.jpg", ...]
+    
     # Audit fields
     created_date = Column(DateTime, default=datetime.utcnow)
     updated_date = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
@@ -56,6 +59,7 @@ class Destination(Base):
             'opening_hours': self.opening_hours,
             'visit_time': self.visit_time or 60,
             'facilities': self.facilities or [],
+            'images': self.images or [],  # Add images field
             'metadata': self.extra_info or {},  # Map extra_info back to 'metadata' for compatibility
             'is_active': self.is_active
         }

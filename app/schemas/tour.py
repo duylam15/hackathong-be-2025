@@ -77,6 +77,7 @@ class RouteLocation(BaseModel):
     score: float
     opening_hours: Optional[str] = None
     facilities: List[str] = []
+    images: List[str] = []  # Danh sách URLs hình ảnh của địa điểm
 
 
 class TourRecommendation(BaseModel):

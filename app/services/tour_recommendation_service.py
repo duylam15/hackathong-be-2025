@@ -377,7 +377,8 @@ class RouteOptimizer:
                     'travel_time': travel_time,
                     'score': score,
                     'opening_hours': location.get('opening_hours'),
-                    'facilities': location.get('facilities', [])
+                    'facilities': location.get('facilities', []),
+                    'images': location.get('images', [])
                 })
                 
                 total_time += visit_time + travel_time
