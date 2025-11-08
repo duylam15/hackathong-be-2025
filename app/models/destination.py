@@ -12,9 +12,9 @@ class Destination(Base):
     __tablename__ = "destination"
     
     # Primary fields từ destinations_data.json
-    destination_id = Column(Integer, primary_key=True, index=True)
+    destination_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     destination_name = Column(String, nullable=False, index=True)
-    destination_type = Column(String)  # Cultural, Budget, Relaxation, Adventure
+    destination_type = Column(String)  # Cultural, Budget, Relaxation, Adventure, Family
     tags = Column(ARRAY(String), default=[])  # ["history", "culture", "architecture", ...]
     
     # Location fields

@@ -1,8 +1,8 @@
-from typing import Optional, List
+from typing import Optional, List, Dict, Any, Tuple
 from sqlalchemy.orm import Session
-from sqlalchemy import or_, func
+from sqlalchemy import or_, and_, func
 from app.models.destination import Destination
-from app.schemas.destination import DestinationCreate, DestinationUpdate
+from app.schemas.destination import DestinationCreate, DestinationUpdate, DestinationFilter
 
 
 class DestinationService:
@@ -12,9 +12,74 @@ class DestinationService:
     def get_destination(db: Session, destination_id: int) -> Optional[Destination]:
         """Get destination by ID"""
         return db.query(Destination).filter(
-            Destination.destination_id == destination_id,
-            Destination.is_active == True
+            Destination.destination_id == destination_id
         ).first()
+    
+    @staticmethod
+    def get_destinations_with_filters(
+        db: Session,
+        filters: DestinationFilter,
+        page: int = 1,
+        page_size: int = 10,
+        sort_by: str = "destination_id",
+        sort_order: str = "asc"
+    ) -> Tuple[List[Destination], int]:
+        """
+        Get destinations with advanced filters and pagination
+        
+        Returns:
+            Tuple[List[Destination], int]: (destinations, total_count)
+        """
+        query = db.query(Destination)
+        
+        # Apply filters
+        if filters.destination_type:
+            query = query.filter(Destination.destination_type == filters.destination_type)
+        
+        if filters.tags:
+            # Filter by tags - destination must have ALL specified tags
+            for tag in filters.tags:
+                query = query.filter(Destination.tags.contains([tag]))
+        
+        if filters.min_price is not None:
+            query = query.filter(Destination.price >= filters.min_price)
+        
+        if filters.max_price is not None:
+            query = query.filter(Destination.price <= filters.max_price)
+        
+        if filters.facilities:
+            # Filter by facilities - destination must have ALL specified facilities
+            for facility in filters.facilities:
+                query = query.filter(Destination.facilities.contains([facility]))
+        
+        if filters.is_active is not None:
+            query = query.filter(Destination.is_active == filters.is_active)
+        
+        if filters.search:
+            search_term = f"%{filters.search}%"
+            query = query.filter(
+                or_(
+                    Destination.destination_name.ilike(search_term),
+                    Destination.location_address.ilike(search_term)
+                )
+            )
+        
+        # Get total count before pagination
+        total = query.count()
+        
+        # Apply sorting
+        if hasattr(Destination, sort_by):
+            order_column = getattr(Destination, sort_by)
+            if sort_order.lower() == "desc":
+                query = query.order_by(order_column.desc())
+            else:
+                query = query.order_by(order_column.asc())
+        
+        # Apply pagination
+        skip = (page - 1) * page_size
+        destinations = query.offset(skip).limit(page_size).all()
+        
+        return destinations, total
     
     @staticmethod
     def get_destinations(
@@ -25,7 +90,7 @@ class DestinationService:
         search: Optional[str] = None,
         tags: Optional[List[str]] = None
     ) -> List[Destination]:
-        """Get list of destinations with filters"""
+        """Get list of destinations with basic filters (deprecated - use get_destinations_with_filters)"""
         query = db.query(Destination).filter(Destination.is_active == True)
         
         if destination_type:
@@ -40,39 +105,10 @@ class DestinationService:
             )
         
         if tags:
-            # Filter by tags (PostgreSQL array contains)
             for tag in tags:
                 query = query.filter(Destination.tags.contains([tag]))
         
         return query.offset(skip).limit(limit).all()
-    
-    @staticmethod
-    def get_destinations_by_price_range(
-        db: Session,
-        min_price: int = 0,
-        max_price: int = 10000000,
-        skip: int = 0,
-        limit: int = 100
-    ) -> List[Destination]:
-        """Get destinations by price range"""
-        return db.query(Destination).filter(
-            Destination.is_active == True,
-            Destination.price >= min_price,
-            Destination.price <= max_price
-        ).offset(skip).limit(limit).all()
-    
-    @staticmethod
-    def get_destinations_by_type(
-        db: Session,
-        destination_type: str,
-        skip: int = 0,
-        limit: int = 100
-    ) -> List[Destination]:
-        """Get destinations by type"""
-        return db.query(Destination).filter(
-            Destination.is_active == True,
-            Destination.destination_type == destination_type
-        ).offset(skip).limit(limit).all()
     
     @staticmethod
     def create_destination(db: Session, destination_data: DestinationCreate) -> Destination:

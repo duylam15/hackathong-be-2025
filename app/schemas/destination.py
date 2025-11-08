@@ -7,7 +7,7 @@ from decimal import Decimal
 class DestinationBase(BaseModel):
     """Base Destination schema theo destinations_data.json"""
     destination_name: str
-    destination_type: Optional[str] = None  # Cultural, Budget, Relaxation, Adventure
+    destination_type: Optional[str] = None  # Cultural, Budget, Relaxation, Adventure, Family
     tags: List[str] = []  # ["history", "culture", "architecture", ...]
     location_address: Optional[str] = None
     latitude: Optional[Decimal] = None
@@ -16,7 +16,7 @@ class DestinationBase(BaseModel):
     opening_hours: Optional[str] = None  # "08:00-17:00"
     visit_time: Optional[int] = None  # Thời gian tham quan (phút)
     facilities: List[str] = []  # ["parking", "restroom", "wifi", ...]
-    extra_info: Dict[str, Any] = {}  # {"rating": 4.6, "reviews": 8500} - renamed from 'metadata'
+    extra_info: Dict[str, Any] = {}  # {"rating": 4.6, "reviews": 8500}
 
 
 class DestinationCreate(DestinationBase):
@@ -25,7 +25,7 @@ class DestinationCreate(DestinationBase):
 
 
 class DestinationUpdate(BaseModel):
-    """Schema for updating a destination"""
+    """Schema for updating a destination - all fields optional"""
     destination_name: Optional[str] = None
     destination_type: Optional[str] = None
     tags: Optional[List[str]] = None
@@ -48,6 +48,48 @@ class DestinationInDB(DestinationBase):
     is_active: bool
     
     class Config:
+        from_attributes = True
+
+
+class DestinationResponse(DestinationInDB):
+    """Schema for destination response"""
+    pass
+
+
+class DestinationListResponse(BaseModel):
+    """Schema for paginated destination list"""
+    items: List[DestinationResponse]
+    total: int
+    page: int
+    page_size: int
+    total_pages: int
+    
+    class Config:
+        from_attributes = True
+
+
+class DestinationFilter(BaseModel):
+    """Schema for filtering destinations"""
+    destination_type: Optional[str] = Field(None, description="Filter by type: Cultural, Budget, Relaxation, Adventure, Family")
+    tags: Optional[List[str]] = Field(None, description="Filter by tags (AND logic)")
+    min_price: Optional[int] = Field(None, ge=0, description="Minimum price")
+    max_price: Optional[int] = Field(None, ge=0, description="Maximum price")
+    facilities: Optional[List[str]] = Field(None, description="Filter by facilities (AND logic)")
+    is_active: Optional[bool] = Field(None, description="Filter by active status")
+    search: Optional[str] = Field(None, description="Search in name and address")
+    
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "destination_type": "Cultural",
+                "tags": ["history", "museum"],
+                "min_price": 0,
+                "max_price": 100000,
+                "facilities": ["parking", "wifi"],
+                "is_active": True,
+                "search": "nhà thờ"
+            }
+        }
         from_attributes = True
 
 
