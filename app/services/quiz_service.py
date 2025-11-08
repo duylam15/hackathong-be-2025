@@ -134,5 +134,5 @@ def classify_user(answers: List[Answer]) -> QuizResult:
         user_type=user_type,
         novelty_score=round(scaled_novelty, 1),
         description=descriptions.get(user_type, ""),
-        # suggested_tours=suggested
+        suggested_tours=suggested
     )
