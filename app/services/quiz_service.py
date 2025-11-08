@@ -109,23 +109,23 @@ def classify_user(answers: List[Answer]) -> QuizResult:
     scaled_novelty = (novelty_score / num_answers) * 10 if num_answers < 10 else novelty_score
     # Classify based on score (0-10)
     if scaled_novelty > 7:
-        user_type = "Adventure Seeker"
+        user_type = "Adventure"
     elif 5 <= scaled_novelty <= 7:
-        user_type = "Cultural Explorer"  # Can add sub-logic for Family if needed
+        user_type = "Cultural"  # Can add sub-logic for Family if needed
     elif 3 < scaled_novelty < 5:
-        user_type = "Family-Friendly"
+        user_type = "Family"
     elif 1 <= scaled_novelty <= 3:
-        user_type = "Relaxation Lover"
+        user_type = "Relaxation"
     else:
-        user_type = "Budget Traveler"
-    
+        user_type = "Budget"
+
     # Description based on Plog's Model
     descriptions = {
-        "Adventure Seeker": "Bạn là Allocentric: Thích rủi ro và khám phá mới mẻ (Plog, 1974).",
-        "Cultural Explorer": "Bạn là Near-Allocentric: Tìm kiếm văn hóa sâu sắc.",
-        "Family-Friendly": "Bạn là Midcentric: Cân bằng an toàn và nhóm.",
-        "Relaxation Lover": "Bạn là Near-Psychocentric: Ưu tiên thư giãn quen thuộc.",
-        "Budget Traveler": "Bạn là Psychocentric: Tiết kiệm và routine-oriented."
+        "Adventure": "Bạn là Allocentric: Thích rủi ro và khám phá mới mẻ (Plog, 1974).",
+        "Cultural": "Bạn là Near-Allocentric: Tìm kiếm văn hóa sâu sắc.",
+        "Family": "Bạn là Midcentric: Cân bằng an toàn và nhóm.",
+        "Relaxation": "Bạn là Near-Psychocentric: Ưu tiên thư giãn quen thuộc.",
+        "Budget": "Bạn là Psychocentric: Tiết kiệm và routine-oriented."
     }
     
     suggested = SUGGESTED_TOURS.get(user_type, [])
