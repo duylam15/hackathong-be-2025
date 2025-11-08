@@ -121,12 +121,46 @@ def classify_user(answers: List[Answer]) -> QuizResult:
 
     # Description based on Plog's Model
     descriptions = {
-        "Adventure": "Bạn là Allocentric: Thích rủi ro và khám phá mới mẻ (Plog, 1974).",
-        "Cultural": "Bạn là Near-Allocentric: Tìm kiếm văn hóa sâu sắc.",
-        "Family": "Bạn là Midcentric: Cân bằng an toàn và nhóm.",
-        "Relaxation": "Bạn là Near-Psychocentric: Ưu tiên thư giãn quen thuộc.",
-        "Budget": "Bạn là Psychocentric: Tiết kiệm và routine-oriented."
+        "Adventure": (
+            "Bạn là Allocentric – tâm hồn phiêu lưu đích thực. "
+            "Bạn bị cuốn hút bởi những vùng đất hoang sơ, những cung đường mạo hiểm, "
+            "và những nền văn hóa chưa ai từng đặt chân đến. "
+            "Mỗi chuyến đi với bạn là một cuộc chinh phục, một câu chuyện mới để kể. "
+            "Thế giới là tấm bản đồ mở rộng, và bạn luôn sẵn sàng khám phá mọi ngóc ngách của nó."
+        ),
+
+        "Cultural": (
+            "Bạn là Near-Allocentric – người lữ khách tinh tế và sâu sắc. "
+            "Bạn không chỉ du lịch để ngắm cảnh, mà để thấu hiểu con người, lịch sử và văn hóa địa phương. "
+            "Những bảo tàng, lễ hội truyền thống, hay các cuộc trò chuyện với người dân bản địa "
+            "mang đến cho bạn cảm giác kết nối đặc biệt. "
+            "Với bạn, hành trình không chỉ là di chuyển – đó là hành trình của tâm hồn."
+        ),
+
+        "Family": (
+            "Bạn là Midcentric – người cân bằng giữa phiêu lưu và an toàn. "
+            "Bạn thích những chuyến đi nhẹ nhàng, tràn đầy niềm vui cùng người thân và bạn bè. "
+            "Không quá mạo hiểm, cũng chẳng quá tĩnh tại – bạn chọn điểm đến nơi mọi người có thể cùng tận hưởng. "
+            "Với bạn, du lịch là cách để gắn kết, chia sẻ, và tạo nên những kỷ niệm bền lâu."
+        ),
+
+        "Relaxation": (
+            "Bạn là Near-Psychocentric – tâm hồn yêu sự yên bình và an nhiên. "
+            "Bạn tìm đến những bãi biển lặng sóng, những khu nghỉ dưỡng thân thuộc "
+            "và không gian giúp bạn buông bỏ lo toan thường nhật. "
+            "Du lịch với bạn không phải là thử thách, mà là cách để nuôi dưỡng năng lượng và sự cân bằng nội tâm. "
+            "Bạn trân trọng những khoảnh khắc chậm rãi, nơi chỉ còn bạn và nhịp thở của thiên nhiên."
+        ),
+
+        "Budget": (
+            "Bạn là Psychocentric – người yêu sự quen thuộc và giản dị. "
+            "Bạn không cần xa hoa, chỉ cần những trải nghiệm chân thật và thoải mái. "
+            "Bạn thường quay lại những nơi từng đến, bởi chúng mang lại cảm giác an toàn và thân quen. "
+            "Với bạn, du lịch không phải để khoe, mà là để sống trọn vẹn trong những điều nhỏ bé, "
+            "ấm áp và đầy ý nghĩa."
+        )
     }
+
     
     suggested = SUGGESTED_TOURS.get(user_type, [])
     
