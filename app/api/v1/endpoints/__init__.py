@@ -1,0 +1,9 @@
+from .users import router as users_router
+from .destinations import router as destinations_router
+from .itineraries import router as itineraries_router
+
+__all__ = [
+    "users_router",
+    "destinations_router",
+    "itineraries_router"
+]
