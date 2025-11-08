@@ -1,0 +1,75 @@
+{
+  "user": {
+    "name": "Demo User",
+    "type": "Adventure",
+    "preference": [
+      "nature",
+      "adventure",
+      "hiking",
+      "photography",
+      "water"
+    ],
+    "budget": 1500000,
+    "time_available": 12,
+    "max_locations": 6
+  },
+  "tour": {
+    "success": true,
+    "route": [
+      {
+        "id": 7,
+        "name": "Bitexco Financial Tower - Saigon Skydeck",
+        "arrival_time": 0,
+        "visit_time": 90,
+        "cost": 200000,
+        "score": 0.566
+      },
+      {
+        "id": 25,
+        "name": "Bến Bạch Đằng",
+        "arrival_time": 90,
+        "visit_time": 60,
+        "cost": 0,
+        "score": 0.288
+      },
+      {
+        "id": 8,
+        "name": "Bảo Tàng Chứng Tích Chiến Tranh",
+        "arrival_time": 152,
+        "visit_time": 120,
+        "cost": 40000,
+        "score": 0.291
+      },
+      {
+        "id": 6,
+        "name": "Công Viên Tao Đàn",
+        "arrival_time": 272,
+        "visit_time": 60,
+        "cost": 0,
+        "score": 0.288
+      },
+      {
+        "id": 1,
+        "name": "Nhà Thờ Đức Bà",
+        "arrival_time": 333,
+        "visit_time": 60,
+        "cost": 0,
+        "score": 0.288
+      },
+      {
+        "id": 11,
+        "name": "Bưu Điện Trung Tâm Sài Gòn",
+        "arrival_time": 393,
+        "visit_time": 45,
+        "cost": 0,
+        "score": 0.286
+      }
+    ],
+    "total_locations": 6,
+    "total_distance": 3,
+    "total_time": 393,
+    "total_cost": 240000,
+    "total_score": 2.01,
+    "avg_score": 0.33
+  }
+}

@@ -1,7 +1,7 @@
 from typing import Optional, List
 from sqlalchemy.orm import Session
 from sqlalchemy import or_, func
-from app.models.destination import Destination, DestinationCategory, DestinationDescription
+from app.models.destination import Destination
 from app.schemas.destination import DestinationCreate, DestinationUpdate
 
 
@@ -22,7 +22,8 @@ class DestinationService:
         skip: int = 0,
         limit: int = 100,
         destination_type: Optional[str] = None,
-        search: Optional[str] = None
+        search: Optional[str] = None,
+        tags: Optional[List[str]] = None
     ) -> List[Destination]:
         """Get list of destinations with filters"""
         query = db.query(Destination).filter(Destination.is_active == True)
@@ -38,19 +39,40 @@ class DestinationService:
                 )
             )
         
+        if tags:
+            # Filter by tags (PostgreSQL array contains)
+            for tag in tags:
+                query = query.filter(Destination.tags.contains([tag]))
+        
         return query.offset(skip).limit(limit).all()
     
     @staticmethod
-    def get_popular_destinations(
+    def get_destinations_by_price_range(
         db: Session,
-        limit: int = 10
+        min_price: int = 0,
+        max_price: int = 10000000,
+        skip: int = 0,
+        limit: int = 100
     ) -> List[Destination]:
-        """Get popular destinations sorted by popularity score"""
+        """Get destinations by price range"""
         return db.query(Destination).filter(
-            Destination.is_active == True
-        ).order_by(
-            Destination.popularity_score.desc()
-        ).limit(limit).all()
+            Destination.is_active == True,
+            Destination.price >= min_price,
+            Destination.price <= max_price
+        ).offset(skip).limit(limit).all()
+    
+    @staticmethod
+    def get_destinations_by_type(
+        db: Session,
+        destination_type: str,
+        skip: int = 0,
+        limit: int = 100
+    ) -> List[Destination]:
+        """Get destinations by type"""
+        return db.query(Destination).filter(
+            Destination.is_active == True,
+            Destination.destination_type == destination_type
+        ).offset(skip).limit(limit).all()
     
     @staticmethod
     def create_destination(db: Session, destination_data: DestinationCreate) -> Destination:
@@ -98,16 +120,28 @@ class DestinationService:
         return True
     
     @staticmethod
-    def get_destinations_by_category(
-        db: Session,
-        category_id: int,
-        skip: int = 0,
-        limit: int = 100
-    ) -> List[Destination]:
-        """Get destinations by category"""
-        return db.query(Destination).join(
-            Destination.category_mappings
-        ).filter(
-            Destination.is_active == True,
-            Destination.category_mappings.any(category_id=category_id)
-        ).offset(skip).limit(limit).all()
+    def bulk_create_from_json(db: Session, destinations_data: List[dict]) -> List[Destination]:
+        """Bulk create destinations from JSON data (e.g., destinations_data.json)"""
+        created = []
+        for data in destinations_data:
+            # Map JSON fields to model fields
+            destination = Destination(
+                destination_id=data.get('id'),
+                destination_name=data.get('name'),
+                destination_type=data.get('type'),
+                tags=data.get('tags', []),
+                latitude=data.get('latitude'),
+                longitude=data.get('longitude'),
+                location_address=data.get('location_address'),
+                price=data.get('price', 0),
+                opening_hours=data.get('opening_hours'),
+                visit_time=data.get('visit_time', 60),
+                facilities=data.get('facilities', []),
+                extra_info=data.get('metadata', {}),  # Map 'metadata' from JSON to 'extra_info' in model
+                is_active=data.get('is_active', True)
+            )
+            db.add(destination)
+            created.append(destination)
+        
+        db.commit()
+        return created

@@ -1,18 +1,22 @@
 from pydantic import BaseModel, Field
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from datetime import datetime
 from decimal import Decimal
 
 
 class DestinationBase(BaseModel):
-    """Base Destination schema"""
+    """Base Destination schema theo destinations_data.json"""
     destination_name: str
+    destination_type: Optional[str] = None  # Cultural, Budget, Relaxation, Adventure
+    tags: List[str] = []  # ["history", "culture", "architecture", ...]
     location_address: Optional[str] = None
     latitude: Optional[Decimal] = None
     longitude: Optional[Decimal] = None
-    destination_type: Optional[str] = None
-    popularity_score: int = 0
-    avg_duration: Optional[int] = None
+    price: int = 0  # Giá vé (VNĐ)
+    opening_hours: Optional[str] = None  # "08:00-17:00"
+    visit_time: Optional[int] = None  # Thời gian tham quan (phút)
+    facilities: List[str] = []  # ["parking", "restroom", "wifi", ...]
+    extra_info: Dict[str, Any] = {}  # {"rating": 4.6, "reviews": 8500} - renamed from 'metadata'
 
 
 class DestinationCreate(DestinationBase):
@@ -23,12 +27,16 @@ class DestinationCreate(DestinationBase):
 class DestinationUpdate(BaseModel):
     """Schema for updating a destination"""
     destination_name: Optional[str] = None
+    destination_type: Optional[str] = None
+    tags: Optional[List[str]] = None
     location_address: Optional[str] = None
     latitude: Optional[Decimal] = None
     longitude: Optional[Decimal] = None
-    destination_type: Optional[str] = None
-    popularity_score: Optional[int] = None
-    avg_duration: Optional[int] = None
+    price: Optional[int] = None
+    opening_hours: Optional[str] = None
+    visit_time: Optional[int] = None
+    facilities: Optional[List[str]] = None
+    extra_info: Optional[Dict[str, Any]] = None
     is_active: Optional[bool] = None
 
 

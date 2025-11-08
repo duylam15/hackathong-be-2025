@@ -1,97 +1,61 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Numeric, Boolean, DateTime, Text
+from sqlalchemy import Column, Integer, String, Numeric, Boolean, DateTime, Text, JSON, ARRAY
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from app.db.database import Base
 
 
 class Destination(Base):
+    """
+    Model Destination theo cấu trúc của destinations_data.json
+    Đã loại bỏ các bảng phụ phức tạp, tích hợp trực tiếp vào model chính
+    """
     __tablename__ = "destination"
     
+    # Primary fields từ destinations_data.json
     destination_id = Column(Integer, primary_key=True, index=True)
     destination_name = Column(String, nullable=False, index=True)
-    location_address = Column(String)
+    destination_type = Column(String)  # Cultural, Budget, Relaxation, Adventure
+    tags = Column(ARRAY(String), default=[])  # ["history", "culture", "architecture", ...]
+    
+    # Location fields
     latitude = Column(Numeric(10, 8))
     longitude = Column(Numeric(11, 8))
-    destination_type = Column(String)
-    popularity_score = Column(Integer, default=0)
-    avg_duration = Column(Integer)  # in minutes
+    location_address = Column(String)
+    
+    # Visit information
+    price = Column(Integer, default=0)  # Giá vé (VNĐ)
+    opening_hours = Column(String)  # "08:00-17:00"
+    visit_time = Column(Integer)  # Thời gian tham quan (phút)
+    
+    # Facilities & extra info
+    facilities = Column(ARRAY(String), default=[])  # ["parking", "restroom", "wifi", ...]
+    extra_info = Column(JSON, default={})  # {"rating": 4.6, "reviews": 8500} - renamed from 'metadata' to avoid SQLAlchemy conflict
+    
+    # Audit fields
     created_date = Column(DateTime, default=datetime.utcnow)
     updated_date = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     is_active = Column(Boolean, default=True)
     
-    # Relationships
-    category_mappings = relationship("DestinationCategoryMapping", back_populates="destination")
-    attributes = relationship("DestinationAttribute", back_populates="destination")
-    descriptions = relationship("DestinationDescription", back_populates="destination")
+    # Relationships - chỉ giữ relationship với ItineraryDestination
     itinerary_destinations = relationship("ItineraryDestination", back_populates="destination")
     
     def __repr__(self):
-        return f"<Destination(id={self.destination_id}, name={self.destination_name})>"
-
-
-class DestinationCategory(Base):
-    __tablename__ = "destination_category"
+        return f"<Destination(id={self.destination_id}, name={self.destination_name}, type={self.destination_type})>"
     
-    category_id = Column(Integer, primary_key=True, index=True)
-    category_name = Column(String, nullable=False, unique=True)
-    category_description = Column(Text)
-    icon = Column(String)
-    
-    # Relationships
-    category_mappings = relationship("DestinationCategoryMapping", back_populates="category")
-    
-    def __repr__(self):
-        return f"<DestinationCategory(id={self.category_id}, name={self.category_name})>"
-
-
-class DestinationCategoryMapping(Base):
-    __tablename__ = "destination_category_mapping"
-    
-    mapping_id = Column(Integer, primary_key=True, index=True)
-    destination_id = Column(Integer, ForeignKey("destination.destination_id"), nullable=False)
-    category_id = Column(Integer, ForeignKey("destination_category.category_id"), nullable=False)
-    
-    # Relationships
-    destination = relationship("Destination", back_populates="category_mappings")
-    category = relationship("DestinationCategory", back_populates="category_mappings")
-    
-    def __repr__(self):
-        return f"<DestinationCategoryMapping(destination_id={self.destination_id}, category_id={self.category_id})>"
-
-
-class DestinationAttribute(Base):
-    __tablename__ = "destination_attribute"
-    
-    attribute_id = Column(Integer, primary_key=True, index=True)
-    destination_id = Column(Integer, ForeignKey("destination.destination_id"), nullable=False)
-    attribute_key = Column(String, nullable=False)
-    attribute_value = Column(String)
-    attribute_type = Column(String)
-    
-    # Relationships
-    destination = relationship("Destination", back_populates="attributes")
-    
-    def __repr__(self):
-        return f"<DestinationAttribute(id={self.attribute_id}, key={self.attribute_key})>"
-
-
-class DestinationDescription(Base):
-    __tablename__ = "destination_description"
-    
-    description_id = Column(Integer, primary_key=True, index=True)
-    destination_id = Column(Integer, ForeignKey("destination.destination_id"), nullable=False)
-    language_code = Column(String(5), default="en")
-    title = Column(String)
-    short_description = Column(Text)
-    full_description = Column(Text)
-    history_info = Column(Text)
-    cultural_info = Column(Text)
-    travel_tips = Column(Text)
-    created_date = Column(DateTime, default=datetime.utcnow)
-    updated_date = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    
-    # Relationships
-    destination = relationship("Destination", back_populates="descriptions")
-    
-    def __repr__(self):
-        return f"<DestinationDescription(id={self.description_id}, lang={self.language_code})>"
+    def to_dict(self):
+        """Convert model to dictionary for tour optimizer"""
+        return {
+            'id': self.destination_id,
+            'name': self.destination_name,
+            'type': self.destination_type,
+            'tags': self.tags or [],
+            'latitude': float(self.latitude) if self.latitude else 0,
+            'longitude': float(self.longitude) if self.longitude else 0,
+            'location_address': self.location_address,
+            'price': self.price or 0,
+            'opening_hours': self.opening_hours,
+            'visit_time': self.visit_time or 60,
+            'facilities': self.facilities or [],
+            'metadata': self.extra_info or {},  # Map extra_info back to 'metadata' for compatibility
+            'is_active': self.is_active
+        }

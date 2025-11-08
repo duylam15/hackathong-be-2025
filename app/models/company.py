@@ -15,8 +15,7 @@ class Company(Base):
     registration_date = Column(String)
     status = Column(String, default="active")
     
-    # Relationships
-    destinations = relationship("Destination", back_populates="company")
+    # Relationships removed: Destination no longer has company_id
     
     def __repr__(self):
         return f"<Company(id={self.company_id}, name={self.company_name})>"
