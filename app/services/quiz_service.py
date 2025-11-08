@@ -52,23 +52,23 @@ QUESTIONS = [
 
 # Suggested tours by type (hardcoded; integrate with destination_service later)
 SUGGESTED_TOURS = {
-    "Adventure Seeker": [
+    "Adventure": [
         {"name": "Trekking Sapa", "description": "Leo núi hoang dã", "price": "15M VND"},
         {"name": "Lặn biển Phú Quốc", "description": "Khám phá đại dương", "price": "12M VND"}
     ],
-    "Cultural Explorer": [
+    "Cultural": [
         {"name": "Tour Huế cổ kính", "description": "Lịch sử và lễ hội", "price": "10M VND"},
         {"name": "Chợ nổi Mekong", "description": "Văn hóa sông nước", "price": "8M VND"}
     ],
-    "Family-Friendly": [
+    "Family": [
         {"name": "Vịnh Hạ Long gia đình", "description": "An toàn cho trẻ em", "price": "11M VND"},
         {"name": "Sun World giải trí", "description": "Hoạt động nhóm", "price": "9M VND"}
     ],
-    "Relaxation Lover": [
+    "Relaxation": [
         {"name": "Resort Nha Trang", "description": "Spa và bãi biển", "price": "14M VND"},
         {"name": "Du thuyền Hạ Long", "description": "Thư giãn sang trọng", "price": "13M VND"}
     ],
-    "Budget Traveler": [
+    "Budget": [
         {"name": "Backpacker Hội An", "description": "Homestay tiết kiệm", "price": "5M VND"},
         {"name": "Xe buýt miền Trung", "description": "Di chuyển rẻ", "price": "4M VND"}
     ]

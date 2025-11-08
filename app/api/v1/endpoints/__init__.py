@@ -1,9 +1,10 @@
-from . import users, destinations, quiz, auth, tours
+from . import users, destinations, quiz, auth, tours, tags
 
 __all__ = [
     "users",
     "destinations",
     "quiz",
     "auth",
-    "tours"
+    "tours",
+    "tags"
 ]

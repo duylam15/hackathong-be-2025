@@ -5,6 +5,7 @@ from .destination import (
     Destination,
 )
 from .itinerary import Itinerary, ItineraryDestination
+from .tag import Tag
 
 __all__ = [
     "Base",
@@ -12,5 +13,6 @@ __all__ = [
     "Account",
     "Destination",
     "Itinerary",
-    "ItineraryDestination"
+    "ItineraryDestination",
+    "Tag"
 ]

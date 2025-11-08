@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.api.v1.endpoints import auth, users, destinations, quiz, tours
+from app.api.v1.endpoints import auth, users, destinations, quiz, tours, tags
 
 # Create API v1 router
 api_router = APIRouter()
@@ -33,4 +33,10 @@ api_router.include_router(
     tours.router,
     prefix="/tours",
     tags=["tours"]
+)
+
+api_router.include_router(
+    tags.router,
+    prefix="/tags",
+    tags=["tags"]
 )
