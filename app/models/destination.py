@@ -39,6 +39,14 @@ class Destination(Base):
     updated_date = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     is_active = Column(Boolean, default=True)
     
+    # Collaborative Filtering - Aggregated metrics (NEW)
+    avg_rating = Column(Numeric(3, 2), default=0.0)  # Average rating from users (0.0 - 5.0)
+    total_ratings = Column(Integer, default=0)  # Total number of ratings
+    total_visits = Column(Integer, default=0)  # Total number of visits logged
+    total_favorites = Column(Integer, default=0)  # Total number of users who favorited
+    popularity_score = Column(Numeric(3, 2), default=0.0)  # Computed popularity (0.0 - 1.0)
+    last_stats_update = Column(DateTime, default=datetime.utcnow)  # When stats were last updated
+    
     # Relationships - chỉ giữ relationship với ItineraryDestination
     itinerary_destinations = relationship("ItineraryDestination", back_populates="destination")
     

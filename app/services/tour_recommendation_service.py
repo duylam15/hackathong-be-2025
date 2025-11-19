@@ -3,7 +3,9 @@
 TOUR RECOMMENDATION SERVICE - Dịch vụ gợi ý tour du lịch cá nhân hóa
 ==============================================================================
 Service tích hợp các thành phần:
-- Tính điểm cá nhân hóa cho từng địa điểm
+- Tính điểm cá nhân hóa cho từng địa điểm (Content-Based)
+- Collaborative Filtering (User behavior learning)
+- Hybrid Scoring (CB + CF)
 - Tối ưu lộ trình với OR-Tools
 - Tạo tour recommendations
 """
@@ -17,6 +19,7 @@ from ortools.constraint_solver import routing_enums_pb2
 from ortools.constraint_solver import pywrapcp
 
 from app.models.destination import Destination
+from app.services.collaborative_filtering_service import CollaborativeFilteringService
 
 
 # ==============================================================================
@@ -110,6 +113,126 @@ class ScoringEngine:
             scored.append((dest, score))
         
         # Sắp xếp theo điểm giảm dần
+        scored.sort(key=lambda x: x[1], reverse=True)
+        
+        if top_n:
+            return scored[:top_n]
+        return scored
+    
+    @classmethod
+    def rank_destinations_hybrid(
+        cls,
+        user: Dict,
+        destinations: List[Dict],
+        db: Session,
+        user_id: Optional[int] = None,
+        use_cf: bool = True,
+        top_n: Optional[int] = None
+    ) -> List[Tuple[Dict, float, Dict]]:
+        """
+        Tính điểm hybrid (Content-Based + Collaborative Filtering) và xếp hạng
+        
+        Args:
+            user: User profile
+            destinations: Danh sách địa điểm
+            db: Database session
+            user_id: User ID (None = anonymous, chỉ dùng CB)
+            use_cf: Enable CF (False = CB only)
+            top_n: Số lượng top muốn lấy
+            
+        Returns:
+            List[(destination, final_score, metadata)] đã sắp xếp theo điểm giảm dần
+        """
+        scored = []
+        
+        # Step 1: Content-Based Scoring (Always)
+        for dest in destinations:
+            cb_score = cls.calculate_score(user, dest)
+            dest['cb_score'] = cb_score
+        
+        # Step 2: Collaborative Filtering Scoring (if user_id provided)
+        if use_cf and user_id:
+            try:
+                cf_service = CollaborativeFilteringService(db)
+                dest_ids = [d['id'] for d in destinations]
+                
+                # Get CF scores batch
+                cf_scores = cf_service.get_cf_scores_for_destinations(user_id, dest_ids)
+                
+                # Get user activity level for adaptive weighting
+                activity = cf_service.get_user_activity_level(user_id)
+                cf_weight = activity['recommended_cf_weight']
+                cb_weight = 1 - cf_weight
+                
+                print(f"DEBUG CF: User activity level: {activity['activity_level']}, "
+                      f"CF weight: {cf_weight:.2f}, CB weight: {cb_weight:.2f}")
+                
+                # Hybrid scoring
+                for dest in destinations:
+                    dest_id = dest['id']
+                    cb_score = dest['cb_score']
+                    
+                    if dest_id in cf_scores:
+                        cf_data = cf_scores[dest_id]
+                        cf_score = cf_data['cf_score']
+                        cf_confidence = cf_data['confidence']
+                        
+                        # Adjust weight based on CF confidence
+                        if cf_confidence > 0.7:
+                            # High confidence → trust CF more
+                            alpha_cb = 0.3
+                            alpha_cf = 0.7
+                        elif cf_confidence > 0.4:
+                            # Medium confidence → use recommended weights
+                            alpha_cb = cb_weight
+                            alpha_cf = cf_weight
+                        else:
+                            # Low confidence → rely on CB
+                            alpha_cb = 0.8
+                            alpha_cf = 0.2
+                        
+                        # Calculate hybrid score
+                        final_score = alpha_cb * cb_score + alpha_cf * cf_score
+                        
+                        metadata = {
+                            'cb_score': round(cb_score, 3),
+                            'cf_score': round(cf_score, 3),
+                            'cf_confidence': round(cf_confidence, 2),
+                            'cf_method': cf_data['method'],
+                            'alpha_cb': round(alpha_cb, 2),
+                            'alpha_cf': round(alpha_cf, 2),
+                            'scoring_method': 'hybrid'
+                        }
+                    else:
+                        # No CF score available, use CB only
+                        final_score = cb_score
+                        metadata = {
+                            'cb_score': round(cb_score, 3),
+                            'scoring_method': 'content_based'
+                        }
+                    
+                    scored.append((dest, final_score, metadata))
+                
+                print(f"DEBUG CF: Hybrid scoring completed for {len(scored)} destinations")
+                
+            except Exception as e:
+                print(f"ERROR CF: Collaborative filtering failed: {str(e)}")
+                # Fallback to content-based only
+                for dest in destinations:
+                    scored.append((dest, dest['cb_score'], {
+                        'cb_score': round(dest['cb_score'], 3),
+                        'scoring_method': 'content_based',
+                        'cf_error': str(e)
+                    }))
+        else:
+            # Content-based only (no user_id or CF disabled)
+            for dest in destinations:
+                scored.append((dest, dest['cb_score'], {
+                    'cb_score': round(dest['cb_score'], 3),
+                    'scoring_method': 'content_based'
+                }))
+        
+        # Sort by final score descending
         scored.sort(key=lambda x: x[1], reverse=True)
         
         if top_n:
@@ -558,10 +681,12 @@ class TourRecommendationService:
     def get_tour_recommendations(
         db: Session,
         user_profile: Dict,
-        start_location: Optional[Dict] = None
+        start_location: Optional[Dict] = None,
+        user_id: Optional[int] = None,  # NEW: User ID for CF
+        use_cf: bool = True  # NEW: Enable/disable CF
     ) -> Dict:
         """
-        Tạo gợi ý tour cho user với fallback mechanism
+        Tạo gợi ý tour cho user với Hybrid Recommendation (CB + CF)
         
         Args:
             db: Database session
@@ -573,6 +698,8 @@ class TourRecommendationService:
                 'max_locations': 5
             }
             start_location: Điểm khởi hành (optional)
+            user_id: User ID for collaborative filtering (None = anonymous, content-based only)
+            use_cf: Enable collaborative filtering (False = content-based only)
             
         Returns:
             Dict với tour recommendations
@@ -662,21 +789,53 @@ class TourRecommendationService:
                 'message': f'Không có địa điểm nào trong bán kính {max_distance_km}km'
             }
         
-        # 3. Tính điểm và chọn top destinations
+        # 3. Tính điểm HYBRID (Content-Based + Collaborative Filtering)
         max_locations = min(user_profile.get('max_locations', 5), 6)  # Max 6 locations
-        scored_destinations = ScoringEngine.rank_destinations(
-            user_profile,
-            nearby_destinations,
-            top_n=max_locations
-        )
-        print(f"DEBUG: Scored destinations: {len(scored_destinations)}")
         
-        # Prepare destinations for routing
-        routing_destinations = []
-        for dest, score in scored_destinations:
-            dest_copy = dest.copy()
-            dest_copy['score'] = score
-            routing_destinations.append(dest_copy)
+        if use_cf and user_id:
+            # Use hybrid scoring (CB + CF)
+            print(f"DEBUG: Using HYBRID scoring (CB + CF) for user {user_id}")
+            scored_destinations = ScoringEngine.rank_destinations_hybrid(
+                user_profile,
+                nearby_destinations,
+                db=db,
+                user_id=user_id,
+                use_cf=True,
+                top_n=max_locations
+            )
+            
+            # Prepare destinations for routing with metadata
+            routing_destinations = []
+            for dest, score, metadata in scored_destinations:
+                dest_copy = dest.copy()
+                dest_copy['score'] = score
+                dest_copy['scoring_metadata'] = metadata
+                routing_destinations.append(dest_copy)
+                
+            scoring_method = 'hybrid'
+        else:
+            # Use content-based only (original)
+            print(f"DEBUG: Using CONTENT-BASED scoring only")
+            scored_destinations = ScoringEngine.rank_destinations(
+                user_profile,
+                nearby_destinations,
+                top_n=max_locations
+            )
+            
+            # Prepare destinations for routing
+            routing_destinations = []
+            for dest, score in scored_destinations:
+                dest_copy = dest.copy()
+                dest_copy['score'] = score
+                dest_copy['scoring_metadata'] = {
+                    'cb_score': round(score, 3),
+                    'scoring_method': 'content_based'
+                }
+                routing_destinations.append(dest_copy)
+                
+            scoring_method = 'content_based'
+        
+        print(f"DEBUG: Scored destinations: {len(routing_destinations)}, Method: {scoring_method}")
         
         print(f"DEBUG: Routing destinations: {len(routing_destinations)}")
         
@@ -698,6 +857,16 @@ class TourRecommendationService:
             # Thêm note cho user biết đang dùng fallback
             if result.get('success'):
                 result['note'] = 'Sử dụng thuật toán tối ưu đơn giản (Greedy). Lộ trình có thể chưa tối ưu nhất.'
+        
+        # Add CF metadata to result
+        if result.get('success'):
+            result['recommendation_metadata'] = {
+                'scoring_method': scoring_method,
+                'user_id': user_id,
+                'cf_enabled': use_cf and user_id is not None,
+                'total_destinations_considered': len(nearby_destinations),
+                'scored_destinations': len(routing_destinations)
+            }
         
         return result
     

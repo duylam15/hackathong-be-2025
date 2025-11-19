@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.api.v1.endpoints import auth, users, destinations, quiz, tours, tags
+from app.api.v1.endpoints import auth, users, destinations, quiz, tours, tags, rating
 
 # Create API v1 router
 api_router = APIRouter()
@@ -39,4 +39,11 @@ api_router.include_router(
     tags.router,
     prefix="/tags",
     tags=["tags"]
+)
+
+# Collaborative Filtering endpoints
+api_router.include_router(
+    rating.router,
+    prefix="",  # No prefix since rating.router already has "/ratings", "/favorites", etc.
+    tags=["collaborative-filtering"]
 )

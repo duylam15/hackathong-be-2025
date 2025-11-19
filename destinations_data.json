@@ -1,427 +1,973 @@
 [
-  {
-    "id": 1,
-    "name": "Nhà Thờ Đức Bà",
-    "type": "Cultural",
-    "tags": ["history", "culture", "architecture", "photography", "landmark"],
-    "latitude": 10.7797,
-    "longitude": 106.6990,
-    "location_address": "01 Công xã Paris, Bến Nghé, Quận 1, TP.HCM",
-    "price": 0,
-    "opening_hours": "08:00-17:00",
-    "visit_time": 60,
-    "facilities": ["parking", "restroom"],
-    "metadata": {"rating": 4.6, "reviews": 8500},
-    "created_date": "2024-01-10T08:00:00",
-    "updated_date": "2025-11-07T10:00:00",
-    "is_active": true
-  },
-  {
-    "id": 2,
-    "name": "Bến Nhà Rồng",
-    "type": "Cultural",
-    "tags": ["history", "culture", "museum", "education", "landmark"],
-    "latitude": 10.7676,
-    "longitude": 106.7071,
-    "location_address": "01 Nguyễn Tất Thành, Phường 12, Quận 4, TP.HCM",
-    "price": 20000,
-    "opening_hours": "07:30-17:30",
-    "visit_time": 90,
-    "facilities": ["parking", "restroom", "wifi", "gift_shop"],
-    "metadata": {"rating": 4.4, "reviews": 3200},
-    "created_date": "2024-01-12T09:00:00",
-    "updated_date": "2025-11-05T14:00:00",
-    "is_active": true
-  },
-  {
-    "id": 3,
-    "name": "Phố Đi Bộ Nguyễn Huệ",
-    "type": "Cultural",
-    "tags": ["walking", "entertainment", "food", "shopping", "nightlife"],
-    "latitude": 10.7746,
-    "longitude": 106.7035,
-    "location_address": "Đường Nguyễn Huệ, Bến Nghé, Quận 1, TP.HCM",
-    "price": 0,
-    "opening_hours": "00:00-23:59",
-    "visit_time": 90,
-    "facilities": ["restroom", "wifi", "restaurant"],
-    "metadata": {"rating": 4.5, "reviews": 12000},
-    "created_date": "2024-01-08T07:00:00",
-    "updated_date": "2025-11-08T09:00:00",
-    "is_active": true
-  },
-  {
-    "id": 4,
-    "name": "Chợ Bến Thành",
-    "type": "Budget",
-    "tags": ["shopping", "market", "local", "food", "souvenir"],
-    "latitude": 10.7723,
-    "longitude": 106.6981,
-    "location_address": "Lê Lợi, Phường Bến Thành, Quận 1, TP.HCM",
-    "price": 0,
-    "opening_hours": "06:00-18:00",
-    "visit_time": 120,
-    "facilities": ["restroom", "food_court"],
-    "metadata": {"rating": 4.2, "reviews": 15000},
-    "created_date": "2024-01-05T06:00:00",
-    "updated_date": "2025-11-06T11:00:00",
-    "is_active": true
-  },
-  {
-    "id": 5,
-    "name": "Dinh Độc Lập",
-    "type": "Cultural",
-    "tags": ["history", "culture", "museum", "architecture", "landmark"],
-    "latitude": 10.7769,
-    "longitude": 106.6954,
-    "location_address": "135 Nam Kỳ Khởi Nghĩa, Phường Bến Thành, Quận 1, TP.HCM",
-    "price": 65000,
-    "opening_hours": "08:00-17:00",
-    "visit_time": 120,
-    "facilities": ["parking", "restroom", "wifi", "gift_shop"],
-    "metadata": {"rating": 4.7, "reviews": 9800},
-    "created_date": "2024-01-15T08:30:00",
-    "updated_date": "2025-11-04T15:00:00",
-    "is_active": true
-  },
-  {
-    "id": 6,
-    "name": "Công Viên Tao Đàn",
-    "type": "Relaxation",
-    "tags": ["park", "relaxation", "nature", "exercise", "peaceful"],
-    "latitude": 10.7823,
-    "longitude": 106.6918,
-    "location_address": "Đường Trương Định, Phường Bến Thành, Quận 1, TP.HCM",
-    "price": 0,
-    "opening_hours": "05:00-21:00",
-    "visit_time": 60,
-    "facilities": ["restroom", "parking"],
-    "metadata": {"rating": 4.3, "reviews": 2100},
-    "created_date": "2024-02-01T07:00:00",
-    "updated_date": "2025-10-28T12:00:00",
-    "is_active": true
-  },
-  {
-    "id": 7,
-    "name": "Bitexco Financial Tower - Saigon Skydeck",
-    "type": "Adventure",
-    "tags": ["view", "photography", "modern", "entertainment", "landmark"],
-    "latitude": 10.7717,
-    "longitude": 106.7038,
-    "location_address": "36 Hồ Tung Mậu, Bến Nghé, Quận 1, TP.HCM",
-    "price": 200000,
-    "opening_hours": "09:30-21:30",
-    "visit_time": 90,
-    "facilities": ["parking", "restroom", "wifi", "restaurant"],
-    "metadata": {"rating": 4.5, "reviews": 6700},
-    "created_date": "2024-02-10T09:00:00",
-    "updated_date": "2025-11-03T16:00:00",
-    "is_active": true
-  },
-  {
-    "id": 8,
-    "name": "Bảo Tàng Chứng Tích Chiến Tranh",
-    "type": "Cultural",
-    "tags": ["history", "museum", "education", "culture", "photography"],
-    "latitude": 10.7797,
-    "longitude": 106.6919,
-    "location_address": "28 Võ Văn Tần, Phường 6, Quận 3, TP.HCM",
-    "price": 40000,
-    "opening_hours": "07:30-18:00",
-    "visit_time": 120,
-    "facilities": ["parking", "restroom", "wifi", "gift_shop"],
-    "metadata": {"rating": 4.6, "reviews": 11200},
-    "created_date": "2024-01-20T08:00:00",
-    "updated_date": "2025-11-02T13:00:00",
-    "is_active": true
-  },
-  {
-    "id": 9,
-    "name": "Thảo Cầm Viên Sài Gòn",
-    "type": "Family",
-    "tags": ["zoo", "family", "kids", "nature", "education"],
-    "latitude": 10.7878,
-    "longitude": 106.7054,
-    "location_address": "2B Nguyễn Bỉnh Khiêm, Bến Nghé, Quận 1, TP.HCM",
-    "price": 50000,
-    "opening_hours": "07:00-18:00",
-    "visit_time": 180,
-    "facilities": ["parking", "restroom", "restaurant", "gift_shop"],
-    "metadata": {"rating": 4.3, "reviews": 8900},
-    "created_date": "2024-01-18T07:30:00",
-    "updated_date": "2025-10-30T10:00:00",
-    "is_active": true
-  },
-  {
-    "id": 10,
-    "name": "Phố Ẩm Thực Bùi Viện",
-    "type": "Budget",
-    "tags": ["food", "street_food", "nightlife", "entertainment", "local"],
-    "latitude": 10.7677,
-    "longitude": 106.6936,
-    "location_address": "Đường Bùi Viện, Phường Phạm Ngũ Lão, Quận 1, TP.HCM",
-    "price": 100000,
-    "opening_hours": "18:00-02:00",
-    "visit_time": 120,
-    "facilities": ["restroom"],
-    "metadata": {"rating": 4.4, "reviews": 18500},
-    "created_date": "2024-01-25T18:00:00",
-    "updated_date": "2025-11-08T20:00:00",
-    "is_active": true
-  },
-  {
-    "id": 11,
-    "name": "Bưu Điện Trung Tâm Sài Gòn",
-    "type": "Cultural",
-    "tags": ["history", "architecture", "photography", "landmark", "souvenir"],
-    "latitude": 10.7798,
-    "longitude": 106.6995,
-    "location_address": "02 Công xã Paris, Bến Nghé, Quận 1, TP.HCM",
-    "price": 0,
-    "opening_hours": "07:00-19:00",
-    "visit_time": 45,
-    "facilities": ["restroom", "wifi", "shop"],
-    "metadata": {"rating": 4.5, "reviews": 7300},
-    "created_date": "2024-01-22T08:00:00",
-    "updated_date": "2025-11-01T11:00:00",
-    "is_active": true
-  },
-  {
-    "id": 12,
-    "name": "Dam Sen Water Park",
-    "type": "Family",
-    "tags": ["water_park", "family", "kids", "fun", "entertainment"],
-    "latitude": 10.7661,
-    "longitude": 106.6388,
-    "location_address": "03 Hòa Bình, Phường 03, Quận 11, TP.HCM",
-    "price": 180000,
-    "opening_hours": "08:00-18:00",
-    "visit_time": 240,
-    "facilities": ["parking", "restroom", "restaurant", "locker"],
-    "metadata": {"rating": 4.4, "reviews": 12400},
-    "created_date": "2024-02-15T08:00:00",
-    "updated_date": "2025-11-05T14:30:00",
-    "is_active": true
-  },
-  {
-    "id": 13,
-    "name": "Chùa Vĩnh Nghiêm",
-    "type": "Cultural",
-    "tags": ["temple", "culture", "peaceful", "photography", "architecture"],
-    "latitude": 10.7981,
-    "longitude": 106.6833,
-    "location_address": "339 Nam Kỳ Khởi Nghĩa, Phường 7, Quận 3, TP.HCM",
-    "price": 0,
-    "opening_hours": "06:00-18:00",
-    "visit_time": 60,
-    "facilities": ["parking", "restroom"],
-    "metadata": {"rating": 4.6, "reviews": 3800},
-    "created_date": "2024-01-28T07:00:00",
-    "updated_date": "2025-10-25T09:00:00",
-    "is_active": true
-  },
-  {
-    "id": 14,
-    "name": "Nhà Hàng Món Huế",
-    "type": "Family",
-    "tags": ["restaurant", "family", "food", "local", "traditional"],
-    "latitude": 10.7745,
-    "longitude": 106.6925,
-    "location_address": "160 Trần Hưng Đạo, Phường Nguyễn Cư Trinh, Quận 1, TP.HCM",
-    "price": 200000,
-    "opening_hours": "10:00-22:00",
-    "visit_time": 90,
-    "facilities": ["restroom", "wifi", "parking"],
-    "metadata": {"rating": 4.5, "reviews": 2900},
-    "created_date": "2024-03-01T10:00:00",
-    "updated_date": "2025-11-07T15:00:00",
-    "is_active": true
-  },
-  {
-    "id": 15,
-    "name": "Landmark 81 Skyview",
-    "type": "Adventure",
-    "tags": ["view", "modern", "photography", "luxury", "entertainment"],
-    "latitude": 10.7946,
-    "longitude": 106.7217,
-    "location_address": "720A Đ. Điện Biên Phủ, Vinhomes Tân Cảng, Bình Thạnh, TP.HCM",
-    "price": 250000,
-    "opening_hours": "09:00-22:00",
-    "visit_time": 90,
-    "facilities": ["parking", "restroom", "wifi", "restaurant"],
-    "metadata": {"rating": 4.7, "reviews": 9200},
-    "created_date": "2024-03-10T09:00:00",
-    "updated_date": "2025-11-08T12:00:00",
-    "is_active": true
-  },
-  {
-    "id": 16,
-    "name": "Spa Thảo Điền",
-    "type": "Relaxation",
-    "tags": ["spa", "relaxation", "wellness", "massage", "luxury"],
-    "latitude": 10.8027,
-    "longitude": 106.7378,
-    "location_address": "36 Đường Số 9, Thảo Điền, Quận 2, TP.HCM",
-    "price": 400000,
-    "opening_hours": "09:00-21:00",
-    "visit_time": 120,
-    "facilities": ["parking", "restroom", "wifi", "sauna"],
-    "metadata": {"rating": 4.8, "reviews": 1850},
-    "created_date": "2024-03-15T09:00:00",
-    "updated_date": "2025-11-06T17:00:00",
-    "is_active": true
-  },
-  {
-    "id": 17,
-    "name": "Bảo Tàng Mỹ Thuật",
-    "type": "Cultural",
-    "tags": ["museum", "art", "culture", "education", "photography"],
-    "latitude": 10.7690,
-    "longitude": 106.6961,
-    "location_address": "97A Phó Đức Chính, Phường Nguyễn Thái Bình, Quận 1, TP.HCM",
-    "price": 30000,
-    "opening_hours": "08:00-17:00",
-    "visit_time": 90,
-    "facilities": ["restroom", "wifi", "gift_shop"],
-    "metadata": {"rating": 4.4, "reviews": 2600},
-    "created_date": "2024-02-20T08:30:00",
-    "updated_date": "2025-10-22T14:00:00",
-    "is_active": true
-  },
-  {
-    "id": 18,
-    "name": "Cafe Apartment Nguyễn Huệ",
-    "type": "Relaxation",
-    "tags": ["cafe", "photography", "modern", "relaxation", "unique"],
-    "latitude": 10.7733,
-    "longitude": 106.7031,
-    "location_address": "42 Nguyễn Huệ, Bến Nghé, Quận 1, TP.HCM",
-    "price": 80000,
-    "opening_hours": "08:00-23:00",
-    "visit_time": 90,
-    "facilities": ["wifi", "restroom"],
-    "metadata": {"rating": 4.6, "reviews": 5400},
-    "created_date": "2024-03-05T08:00:00",
-    "updated_date": "2025-11-08T10:00:00",
-    "is_active": true
-  },
-  {
-    "id": 19,
-    "name": "Khu Du Lịch Suối Tiên",
-    "type": "Family",
-    "tags": ["theme_park", "family", "kids", "water_park", "entertainment"],
-    "latitude": 10.8953,
-    "longitude": 106.8053,
-    "location_address": "120 Tân Hoà, Tăng Nhơn Phú B, Quận 9, TP.HCM",
-    "price": 150000,
-    "opening_hours": "08:00-18:00",
-    "visit_time": 300,
-    "facilities": ["parking", "restroom", "restaurant", "locker"],
-    "metadata": {"rating": 4.2, "reviews": 16800},
-    "created_date": "2024-02-25T08:00:00",
-    "updated_date": "2025-11-04T11:00:00",
-    "is_active": true
-  },
-  {
-    "id": 20,
-    "name": "Chợ Nổi Cái Răng",
-    "type": "Adventure",
-    "tags": ["market", "boat", "local", "culture", "photography"],
-    "latitude": 10.0377,
-    "longitude": 105.7835,
-    "location_address": "Cái Răng, Cần Thơ (Tour từ TP.HCM)",
-    "price": 500000,
-    "opening_hours": "05:00-09:00",
-    "visit_time": 360,
-    "facilities": ["boat", "guide", "restaurant"],
-    "metadata": {"rating": 4.7, "reviews": 8900},
-    "created_date": "2024-03-20T05:00:00",
-    "updated_date": "2025-11-02T08:00:00",
-    "is_active": true
-  },
-  {
-    "id": 21,
-    "name": "Chợ An Đông",
-    "type": "Budget",
-    "tags": ["shopping", "market", "local", "budget", "wholesale"],
-    "latitude": 10.7559,
-    "longitude": 106.6659,
-    "location_address": "35 An Đông, Phường 9, Quận 5, TP.HCM",
-    "price": 0,
-    "opening_hours": "06:00-19:00",
-    "visit_time": 90,
-    "facilities": ["restroom", "food_court"],
-    "metadata": {"rating": 4.1, "reviews": 4200},
-    "created_date": "2024-02-08T06:30:00",
-    "updated_date": "2025-10-29T13:00:00",
-    "is_active": true
-  },
-  {
-    "id": 22,
-    "name": "Công Viên Văn Hóa Đầm Sen",
-    "type": "Family",
-    "tags": ["park", "family", "kids", "entertainment", "outdoor"],
-    "latitude": 10.7660,
-    "longitude": 106.6395,
-    "location_address": "03 Hòa Bình, Phường 03, Quận 11, TP.HCM",
-    "price": 60000,
-    "opening_hours": "08:00-20:00",
-    "visit_time": 180,
-    "facilities": ["parking", "restroom", "restaurant"],
-    "metadata": {"rating": 4.3, "reviews": 7600},
-    "created_date": "2024-02-12T08:00:00",
-    "updated_date": "2025-11-01T10:00:00",
-    "is_active": true
-  },
-  {
-    "id": 23,
-    "name": "Nhà Thờ Tân Định",
-    "type": "Cultural",
-    "tags": ["church", "architecture", "photography", "culture", "pink"],
-    "latitude": 10.7890,
-    "longitude": 106.6918,
-    "location_address": "289 Hai Bà Trưng, Phường 8, Quận 3, TP.HCM",
-    "price": 0,
-    "opening_hours": "08:00-17:00",
-    "visit_time": 45,
-    "facilities": ["restroom"],
-    "metadata": {"rating": 4.5, "reviews": 5100},
-    "created_date": "2024-02-18T08:00:00",
-    "updated_date": "2025-10-27T11:00:00",
-    "is_active": true
-  },
-  {
-    "id": 24,
-    "name": "Quán Cafe The Workshop",
-    "type": "Relaxation",
-    "tags": ["cafe", "modern", "work", "relaxation", "coffee"],
-    "latitude": 10.7749,
-    "longitude": 106.7008,
-    "location_address": "27 Ngô Đức Kế, Bến Nghé, Quận 1, TP.HCM",
-    "price": 100000,
-    "opening_hours": "07:30-22:00",
-    "visit_time": 90,
-    "facilities": ["wifi", "restroom"],
-    "metadata": {"rating": 4.7, "reviews": 3400},
-    "created_date": "2024-03-08T07:30:00",
-    "updated_date": "2025-11-07T09:00:00",
-    "is_active": true
-  },
-  {
-    "id": 25,
-    "name": "Bến Bạch Đằng",
-    "type": "Relaxation",
-    "tags": ["river", "view", "walking", "evening", "photography"],
-    "latitude": 10.7717,
-    "longitude": 106.7052,
-    "location_address": "Đường Tôn Đức Thắng, Bến Nghé, Quận 1, TP.HCM",
-    "price": 0,
-    "opening_hours": "00:00-23:59",
-    "visit_time": 60,
-    "facilities": ["restroom"],
-    "metadata": {"rating": 4.4, "reviews": 6200},
-    "created_date": "2024-02-05T06:00:00",
-    "updated_date": "2025-11-05T18:00:00",
-    "is_active": true
-  }
+    {
+        "destination_name": "Nhà Thờ Đức Bà",
+        "destination_type": "Cultural",
+        "tags": [
+            "history",
+            "culture",
+            "architecture",
+            "photography",
+            "landmark"
+        ],
+        "location_address": "01 Công xã Paris, Bến Nghé, Quận 1, TP.HCM",
+        "latitude": "10.77970000",
+        "longitude": "106.69900000",
+        "price": 0,
+        "opening_hours": "08:00-17:00",
+        "visit_time": 60,
+        "facilities": [
+            "parking",
+            "restroom"
+        ],
+        "extra_info": {
+            "rating": 4.6,
+            "reviews": 8500
+        },
+        "images": [
+            "https://image.vietgoing.com/destination/large/vietgoing_mzh2503128324.webp",
+            "data:image/jpeg;base64,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",
+            "https://res.klook.com/image/upload/fl_lossy.progressive,q_85/c_fill,w_1000/v1758731523/dm8epebhnu3f0tupehi5.webp"
+        ],
+        "destination_id": 1,
+        "created_date": "2025-11-08T10:57:38.073345",
+        "updated_date": "2025-11-08T10:57:38.073356",
+        "is_active": true
+    },
+    {
+        "destination_name": "Bến Nhà Rồng",
+        "destination_type": "Cultural",
+        "tags": [
+            "history",
+            "culture",
+            "museum",
+            "education",
+            "landmark"
+        ],
+        "location_address": "01 Nguyễn Tất Thành, Phường 12, Quận 4, TP.HCM",
+        "latitude": "10.76760000",
+        "longitude": "106.70710000",
+        "price": 20000,
+        "opening_hours": "07:30-17:30",
+        "visit_time": 90,
+        "facilities": [
+            "parking",
+            "restroom",
+            "wifi",
+            "gift_shop"
+        ],
+        "extra_info": {
+            "rating": 4.4,
+            "reviews": 3200
+        },
+        "images": [
+            "https://images.unsplash.com/photo-1555993539-1732b0258235",
+            "https://images.unsplash.com/photo-1528127269322-539801943592"
+        ],
+        "destination_id": 2,
+        "created_date": "2025-11-08T10:57:38.073359",
+        "updated_date": "2025-11-08T10:57:38.073362",
+        "is_active": true
+    },
+    {
+        "destination_name": "Phố Đi Bộ Nguyễn Huệ",
+        "destination_type": "Cultural",
+        "tags": [
+            "walking",
+            "entertainment",
+            "food",
+            "shopping",
+            "nightlife"
+        ],
+        "location_address": "Đường Nguyễn Huệ, Bến Nghé, Quận 1, TP.HCM",
+        "latitude": "10.77460000",
+        "longitude": "106.70350000",
+        "price": 0,
+        "opening_hours": "00:00-23:59",
+        "visit_time": 90,
+        "facilities": [
+            "restroom",
+            "wifi",
+            "restaurant"
+        ],
+        "extra_info": {
+            "rating": 4.5,
+            "reviews": 12000
+        },
+        "images": [
+            "https://images.unsplash.com/photo-1583417319070-4a69db38a482",
+            "https://images.unsplash.com/photo-1542326319-00f0ba9be267",
+            "https://picsum.photos/800/600?random=1"
+        ],
+        "destination_id": 3,
+        "created_date": "2025-11-08T10:57:38.073364",
+        "updated_date": "2025-11-08T10:57:38.073366",
+        "is_active": true
+    },
+    {
+        "destination_name": "Chợ Bến Thành",
+        "destination_type": "Budget",
+        "tags": [
+            "shopping",
+            "market",
+            "local",
+            "food",
+            "souvenir"
+        ],
+        "location_address": "Lê Lợi, Phường Bến Thành, Quận 1, TP.HCM",
+        "latitude": "10.77230000",
+        "longitude": "106.69810000",
+        "price": 0,
+        "opening_hours": "06:00-18:00",
+        "visit_time": 120,
+        "facilities": [
+            "restroom",
+            "food_court"
+        ],
+        "extra_info": {
+            "rating": 4.2,
+            "reviews": 15000
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 4,
+        "created_date": "2025-11-08T10:57:38.073368",
+        "updated_date": "2025-11-08T10:57:38.073370",
+        "is_active": true
+    },
+    {
+        "destination_name": "Dinh Độc Lập",
+        "destination_type": "Cultural",
+        "tags": [
+            "history",
+            "culture",
+            "museum",
+            "architecture",
+            "landmark"
+        ],
+        "location_address": "135 Nam Kỳ Khởi Nghĩa, Phường Bến Thành, Quận 1, TP.HCM",
+        "latitude": "10.77690000",
+        "longitude": "106.69540000",
+        "price": 65000,
+        "opening_hours": "08:00-17:00",
+        "visit_time": 120,
+        "facilities": [
+            "parking",
+            "restroom",
+            "wifi",
+            "gift_shop"
+        ],
+        "extra_info": {
+            "rating": 4.7,
+            "reviews": 9800
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 5,
+        "created_date": "2025-11-08T10:57:38.073373",
+        "updated_date": "2025-11-08T10:57:38.073374",
+        "is_active": true
+    },
+    {
+        "destination_name": "Công Viên Tao Đàn",
+        "destination_type": "Relaxation",
+        "tags": [
+            "park",
+            "relaxation",
+            "nature",
+            "exercise",
+            "peaceful"
+        ],
+        "location_address": "Đường Trương Định, Phường Bến Thành, Quận 1, TP.HCM",
+        "latitude": "10.78230000",
+        "longitude": "106.69180000",
+        "price": 0,
+        "opening_hours": "05:00-21:00",
+        "visit_time": 60,
+        "facilities": [
+            "restroom",
+            "parking"
+        ],
+        "extra_info": {
+            "rating": 4.3,
+            "reviews": 2100
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 6,
+        "created_date": "2025-11-08T10:57:38.073377",
+        "updated_date": "2025-11-08T10:57:38.073379",
+        "is_active": true
+    },
+    {
+        "destination_name": "Bitexco Financial Tower - Saigon Skydeck",
+        "destination_type": "Adventure",
+        "tags": [
+            "view",
+            "photography",
+            "modern",
+            "entertainment",
+            "landmark"
+        ],
+        "location_address": "36 Hồ Tung Mậu, Bến Nghé, Quận 1, TP.HCM",
+        "latitude": "10.77170000",
+        "longitude": "106.70380000",
+        "price": 200000,
+        "opening_hours": "09:30-21:30",
+        "visit_time": 90,
+        "facilities": [
+            "parking",
+            "restroom",
+            "wifi",
+            "restaurant"
+        ],
+        "extra_info": {
+            "rating": 4.5,
+            "reviews": 6700
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 7,
+        "created_date": "2025-11-08T10:57:38.073381",
+        "updated_date": "2025-11-08T10:57:38.073383",
+        "is_active": true
+    },
+    {
+        "destination_name": "Bảo Tàng Chứng Tích Chiến Tranh",
+        "destination_type": "Cultural",
+        "tags": [
+            "history",
+            "museum",
+            "education",
+            "culture",
+            "photography"
+        ],
+        "location_address": "28 Võ Văn Tần, Phường 6, Quận 3, TP.HCM",
+        "latitude": "10.77970000",
+        "longitude": "106.69190000",
+        "price": 40000,
+        "opening_hours": "07:30-18:00",
+        "visit_time": 120,
+        "facilities": [
+            "parking",
+            "restroom",
+            "wifi",
+            "gift_shop"
+        ],
+        "extra_info": {
+            "rating": 4.6,
+            "reviews": 11200
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 8,
+        "created_date": "2025-11-08T10:57:38.073385",
+        "updated_date": "2025-11-08T10:57:38.073387",
+        "is_active": true
+    },
+    {
+        "destination_name": "Thảo Cầm Viên Sài Gòn",
+        "destination_type": "Family",
+        "tags": [
+            "zoo",
+            "family",
+            "kids",
+            "nature",
+            "education"
+        ],
+        "location_address": "2B Nguyễn Bỉnh Khiêm, Bến Nghé, Quận 1, TP.HCM",
+        "latitude": "10.78780000",
+        "longitude": "106.70540000",
+        "price": 50000,
+        "opening_hours": "07:00-18:00",
+        "visit_time": 180,
+        "facilities": [
+            "parking",
+            "restroom",
+            "restaurant",
+            "gift_shop"
+        ],
+        "extra_info": {
+            "rating": 4.3,
+            "reviews": 8900
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 9,
+        "created_date": "2025-11-08T10:57:38.073389",
+        "updated_date": "2025-11-08T10:57:38.073391",
+        "is_active": true
+    },
+    {
+        "destination_name": "Chợ Nổi Cái Răng",
+        "destination_type": "Adventure",
+        "tags": [
+            "market",
+            "boat",
+            "local",
+            "culture",
+            "photography"
+        ],
+        "location_address": "Cái Răng, Cần Thơ (Tour từ TP.HCM)",
+        "latitude": "10.03770000",
+        "longitude": "105.78350000",
+        "price": 500000,
+        "opening_hours": "05:00-09:00",
+        "visit_time": 360,
+        "facilities": [
+            "boat",
+            "guide",
+            "restaurant"
+        ],
+        "extra_info": {
+            "rating": 4.7,
+            "reviews": 8900
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 20,
+        "created_date": "2025-11-08T10:57:38.073434",
+        "updated_date": "2025-11-08T10:57:38.073436",
+        "is_active": true
+    },
+    {
+        "destination_name": "Phố Ẩm Thực Bùi Viện",
+        "destination_type": "Budget",
+        "tags": [
+            "food",
+            "street_food",
+            "nightlife",
+            "entertainment",
+            "local"
+        ],
+        "location_address": "Đường Bùi Viện, Phường Phạm Ngũ Lão, Quận 1, TP.HCM",
+        "latitude": "10.76770000",
+        "longitude": "106.69360000",
+        "price": 100000,
+        "opening_hours": "18:00-02:00",
+        "visit_time": 120,
+        "facilities": [
+            "restroom"
+        ],
+        "extra_info": {
+            "rating": 4.4,
+            "reviews": 18500
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 10,
+        "created_date": "2025-11-08T10:57:38.073393",
+        "updated_date": "2025-11-08T10:57:38.073395",
+        "is_active": true
+    },
+    {
+        "destination_name": "Bưu Điện Trung Tâm Sài Gòn",
+        "destination_type": "Cultural",
+        "tags": [
+            "history",
+            "architecture",
+            "photography",
+            "landmark",
+            "souvenir"
+        ],
+        "location_address": "02 Công xã Paris, Bến Nghé, Quận 1, TP.HCM",
+        "latitude": "10.77980000",
+        "longitude": "106.69950000",
+        "price": 0,
+        "opening_hours": "07:00-19:00",
+        "visit_time": 45,
+        "facilities": [
+            "restroom",
+            "wifi",
+            "shop"
+        ],
+        "extra_info": {
+            "rating": 4.5,
+            "reviews": 7300
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 11,
+        "created_date": "2025-11-08T10:57:38.073397",
+        "updated_date": "2025-11-08T10:57:38.073399",
+        "is_active": true
+    },
+    {
+        "destination_name": "Dam Sen Water Park",
+        "destination_type": "Family",
+        "tags": [
+            "water_park",
+            "family",
+            "kids",
+            "fun",
+            "entertainment"
+        ],
+        "location_address": "03 Hòa Bình, Phường 03, Quận 11, TP.HCM",
+        "latitude": "10.76610000",
+        "longitude": "106.63880000",
+        "price": 180000,
+        "opening_hours": "08:00-18:00",
+        "visit_time": 240,
+        "facilities": [
+            "parking",
+            "restroom",
+            "restaurant",
+            "locker"
+        ],
+        "extra_info": {
+            "rating": 4.4,
+            "reviews": 12400
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 12,
+        "created_date": "2025-11-08T10:57:38.073402",
+        "updated_date": "2025-11-08T10:57:38.073404",
+        "is_active": true
+    },
+    {
+        "destination_name": "Chùa Vĩnh Nghiêm",
+        "destination_type": "Cultural",
+        "tags": [
+            "temple",
+            "culture",
+            "peaceful",
+            "photography",
+            "architecture"
+        ],
+        "location_address": "339 Nam Kỳ Khởi Nghĩa, Phường 7, Quận 3, TP.HCM",
+        "latitude": "10.79810000",
+        "longitude": "106.68330000",
+        "price": 0,
+        "opening_hours": "06:00-18:00",
+        "visit_time": 60,
+        "facilities": [
+            "parking",
+            "restroom"
+        ],
+        "extra_info": {
+            "rating": 4.6,
+            "reviews": 3800
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 13,
+        "created_date": "2025-11-08T10:57:38.073406",
+        "updated_date": "2025-11-08T10:57:38.073408",
+        "is_active": true
+    },
+    {
+        "destination_name": "Nhà Hàng Món Huế",
+        "destination_type": "Family",
+        "tags": [
+            "restaurant",
+            "family",
+            "food",
+            "local",
+            "traditional"
+        ],
+        "location_address": "160 Trần Hưng Đạo, Phường Nguyễn Cư Trinh, Quận 1, TP.HCM",
+        "latitude": "10.77450000",
+        "longitude": "106.69250000",
+        "price": 200000,
+        "opening_hours": "10:00-22:00",
+        "visit_time": 90,
+        "facilities": [
+            "restroom",
+            "wifi",
+            "parking"
+        ],
+        "extra_info": {
+            "rating": 4.5,
+            "reviews": 2900
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 14,
+        "created_date": "2025-11-08T10:57:38.073410",
+        "updated_date": "2025-11-08T10:57:38.073412",
+        "is_active": true
+    },
+    {
+        "destination_name": "Landmark 81 Skyview",
+        "destination_type": "Adventure",
+        "tags": [
+            "view",
+            "modern",
+            "photography",
+            "luxury",
+            "entertainment"
+        ],
+        "location_address": "720A Đ. Điện Biên Phủ, Vinhomes Tân Cảng, Bình Thạnh, TP.HCM",
+        "latitude": "10.79460000",
+        "longitude": "106.72170000",
+        "price": 250000,
+        "opening_hours": "09:00-22:00",
+        "visit_time": 90,
+        "facilities": [
+            "parking",
+            "restroom",
+            "wifi",
+            "restaurant"
+        ],
+        "extra_info": {
+            "rating": 4.7,
+            "reviews": 9200
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 15,
+        "created_date": "2025-11-08T10:57:38.073414",
+        "updated_date": "2025-11-08T10:57:38.073416",
+        "is_active": true
+    },
+    {
+        "destination_name": "Spa Thảo Điền",
+        "destination_type": "Relaxation",
+        "tags": [
+            "spa",
+            "relaxation",
+            "wellness",
+            "massage",
+            "luxury"
+        ],
+        "location_address": "36 Đường Số 9, Thảo Điền, Quận 2, TP.HCM",
+        "latitude": "10.80270000",
+        "longitude": "106.73780000",
+        "price": 400000,
+        "opening_hours": "09:00-21:00",
+        "visit_time": 120,
+        "facilities": [
+            "parking",
+            "restroom",
+            "wifi",
+            "sauna"
+        ],
+        "extra_info": {
+            "rating": 4.8,
+            "reviews": 1850
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 16,
+        "created_date": "2025-11-08T10:57:38.073418",
+        "updated_date": "2025-11-08T10:57:38.073420",
+        "is_active": true
+    },
+    {
+        "destination_name": "Bảo Tàng Mỹ Thuật",
+        "destination_type": "Cultural",
+        "tags": [
+            "museum",
+            "art",
+            "culture",
+            "education",
+            "photography"
+        ],
+        "location_address": "97A Phó Đức Chính, Phường Nguyễn Thái Bình, Quận 1, TP.HCM",
+        "latitude": "10.76900000",
+        "longitude": "106.69610000",
+        "price": 30000,
+        "opening_hours": "08:00-17:00",
+        "visit_time": 90,
+        "facilities": [
+            "restroom",
+            "wifi",
+            "gift_shop"
+        ],
+        "extra_info": {
+            "rating": 4.4,
+            "reviews": 2600
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 17,
+        "created_date": "2025-11-08T10:57:38.073422",
+        "updated_date": "2025-11-08T10:57:38.073424",
+        "is_active": true
+    },
+    {
+        "destination_name": "Cafe Apartment Nguyễn Huệ",
+        "destination_type": "Relaxation",
+        "tags": [
+            "cafe",
+            "photography",
+            "modern",
+            "relaxation",
+            "unique"
+        ],
+        "location_address": "42 Nguyễn Huệ, Bến Nghé, Quận 1, TP.HCM",
+        "latitude": "10.77330000",
+        "longitude": "106.70310000",
+        "price": 80000,
+        "opening_hours": "08:00-23:00",
+        "visit_time": 90,
+        "facilities": [
+            "wifi",
+            "restroom"
+        ],
+        "extra_info": {
+            "rating": 4.6,
+            "reviews": 5400
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 18,
+        "created_date": "2025-11-08T10:57:38.073426",
+        "updated_date": "2025-11-08T10:57:38.073428",
+        "is_active": true
+    },
+    {
+        "destination_name": "Khu Du Lịch Suối Tiên",
+        "destination_type": "Family",
+        "tags": [
+            "theme_park",
+            "family",
+            "kids",
+            "water_park",
+            "entertainment"
+        ],
+        "location_address": "120 Tân Hoà, Tăng Nhơn Phú B, Quận 9, TP.HCM",
+        "latitude": "10.89530000",
+        "longitude": "106.80530000",
+        "price": 150000,
+        "opening_hours": "08:00-18:00",
+        "visit_time": 300,
+        "facilities": [
+            "parking",
+            "restroom",
+            "restaurant",
+            "locker"
+        ],
+        "extra_info": {
+            "rating": 4.2,
+            "reviews": 16800
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 19,
+        "created_date": "2025-11-08T10:57:38.073430",
+        "updated_date": "2025-11-08T10:57:38.073432",
+        "is_active": true
+    },
+    {
+        "destination_name": "Chợ An Đông",
+        "destination_type": "Budget",
+        "tags": [
+            "shopping",
+            "market",
+            "local",
+            "budget",
+            "wholesale"
+        ],
+        "location_address": "35 An Đông, Phường 9, Quận 5, TP.HCM",
+        "latitude": "10.75590000",
+        "longitude": "106.66590000",
+        "price": 0,
+        "opening_hours": "06:00-19:00",
+        "visit_time": 90,
+        "facilities": [
+            "restroom",
+            "food_court"
+        ],
+        "extra_info": {
+            "rating": 4.1,
+            "reviews": 4200
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 21,
+        "created_date": "2025-11-08T10:57:38.073438",
+        "updated_date": "2025-11-08T10:57:38.073440",
+        "is_active": true
+    },
+    {
+        "destination_name": "Công Viên Văn Hóa Đầm Sen",
+        "destination_type": "Family",
+        "tags": [
+            "park",
+            "family",
+            "kids",
+            "entertainment",
+            "outdoor"
+        ],
+        "location_address": "03 Hòa Bình, Phường 03, Quận 11, TP.HCM",
+        "latitude": "10.76600000",
+        "longitude": "106.63950000",
+        "price": 60000,
+        "opening_hours": "08:00-20:00",
+        "visit_time": 180,
+        "facilities": [
+            "parking",
+            "restroom",
+            "restaurant"
+        ],
+        "extra_info": {
+            "rating": 4.3,
+            "reviews": 7600
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 22,
+        "created_date": "2025-11-08T10:57:38.073442",
+        "updated_date": "2025-11-08T10:57:38.073444",
+        "is_active": true
+    },
+    {
+        "destination_name": "Nhà Thờ Tân Định",
+        "destination_type": "Cultural",
+        "tags": [
+            "church",
+            "architecture",
+            "photography",
+            "culture",
+            "pink"
+        ],
+        "location_address": "289 Hai Bà Trưng, Phường 8, Quận 3, TP.HCM",
+        "latitude": "10.78900000",
+        "longitude": "106.69180000",
+        "price": 0,
+        "opening_hours": "08:00-17:00",
+        "visit_time": 45,
+        "facilities": [
+            "restroom"
+        ],
+        "extra_info": {
+            "rating": 4.5,
+            "reviews": 5100
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 23,
+        "created_date": "2025-11-08T10:57:38.073446",
+        "updated_date": "2025-11-08T10:57:38.073448",
+        "is_active": true
+    },
+    {
+        "destination_name": "Quán Cafe The Workshop",
+        "destination_type": "Relaxation",
+        "tags": [
+            "cafe",
+            "modern",
+            "work",
+            "relaxation",
+            "coffee"
+        ],
+        "location_address": "27 Ngô Đức Kế, Bến Nghé, Quận 1, TP.HCM",
+        "latitude": "10.77490000",
+        "longitude": "106.70080000",
+        "price": 100000,
+        "opening_hours": "07:30-22:00",
+        "visit_time": 90,
+        "facilities": [
+            "wifi",
+            "restroom"
+        ],
+        "extra_info": {
+            "rating": 4.7,
+            "reviews": 3400
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 24,
+        "created_date": "2025-11-08T10:57:38.073451",
+        "updated_date": "2025-11-08T10:57:38.073452",
+        "is_active": true
+    },
+    {
+        "destination_name": "Bến Bạch Đằng",
+        "destination_type": "Relaxation",
+        "tags": [
+            "river",
+            "view",
+            "walking",
+            "evening",
+            "photography"
+        ],
+        "location_address": "Đường Tôn Đức Thắng, Bến Nghé, Quận 1, TP.HCM",
+        "latitude": "10.77170000",
+        "longitude": "106.70520000",
+        "price": 0,
+        "opening_hours": "00:00-23:59",
+        "visit_time": 60,
+        "facilities": [
+            "restroom"
+        ],
+        "extra_info": {
+            "rating": 4.4,
+            "reviews": 6200
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 25,
+        "created_date": "2025-11-08T10:57:38.073455",
+        "updated_date": "2025-11-08T10:57:38.073457",
+        "is_active": true
+    },
+    {
+        "destination_name": "Bảo Tàng Lịch Sử Việt Nam",
+        "destination_type": "Cultural",
+        "tags": [
+            "Lịch sử",
+            "Giáo dục",
+            "Văn hóa"
+        ],
+        "location_address": "2 Nguyễn Bỉnh Khiêm, Bến Nghé, Quận 1",
+        "latitude": "10.78970000",
+        "longitude": "106.69740000",
+        "price": 40000,
+        "opening_hours": "08:00-17:00",
+        "visit_time": 120,
+        "facilities": [
+            "Wifi",
+            "Điều hòa",
+            "Nhà vệ sinh",
+            "Quầy nước"
+        ],
+        "extra_info": {
+            "note": "Đóng cửa thứ Hai",
+            "highlights": [
+                "Hiện vật lịch sử",
+                "Triển lãm văn hóa"
+            ]
+        },
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 26,
+        "created_date": "2025-11-08T12:51:14.801553",
+        "updated_date": "2025-11-08T12:51:14.801562",
+        "is_active": true
+    },
+    {
+        "destination_name": "Công Viên Tao Đàn",
+        "destination_type": "Relaxation",
+        "tags": [],
+        "location_address": null,
+        "latitude": null,
+        "longitude": null,
+        "price": 0,
+        "opening_hours": null,
+        "visit_time": null,
+        "facilities": [],
+        "extra_info": {},
+        "images": [
+            "https://picsum.photos/800/600?random=2",
+            "https://picsum.photos/800/600?random=3"
+        ],
+        "destination_id": 27,
+        "created_date": "2025-11-08T13:00:43.420728",
+        "updated_date": "2025-11-08T13:00:43.420728",
+        "is_active": true
+    },
+    {
+        "destination_name": "abv",
+        "destination_type": "Cultural",
+        "tags": [
+            "aa"
+        ],
+        "location_address": "aba",
+        "latitude": "41.00000000",
+        "longitude": "41.00000000",
+        "price": 1555,
+        "opening_hours": "22",
+        "visit_time": 2,
+        "facilities": [
+            "aa"
+        ],
+        "extra_info": {},
+        "images": [],
+        "destination_id": 28,
+        "created_date": "2025-11-08T13:40:33.633931",
+        "updated_date": "2025-11-08T13:40:33.633931",
+        "is_active": true
+    },
+    {
+        "destination_name": "aa",
+        "destination_type": "Adventure",
+        "tags": [
+            "11"
+        ],
+        "location_address": "1",
+        "latitude": "11.00000000",
+        "longitude": "11.00000000",
+        "price": 11,
+        "opening_hours": "11",
+        "visit_time": 11,
+        "facilities": [
+            "ada"
+        ],
+        "extra_info": {},
+        "images": [],
+        "destination_id": 29,
+        "created_date": "2025-11-08T13:55:24.432012",
+        "updated_date": "2025-11-08T13:55:24.432012",
+        "is_active": true
+    },
+    {
+        "destination_name": "xx",
+        "destination_type": "Cultural",
+        "tags": [
+            "11"
+        ],
+        "location_address": "11",
+        "latitude": "11.00000000",
+        "longitude": "11.00000000",
+        "price": 11,
+        "opening_hours": "11",
+        "visit_time": 11,
+        "facilities": [
+            "11"
+        ],
+        "extra_info": {},
+        "images": [],
+        "destination_id": 30,
+        "created_date": "2025-11-08T13:55:42.857529",
+        "updated_date": "2025-11-08T13:55:42.857529",
+        "is_active": true
+    }
 ]
