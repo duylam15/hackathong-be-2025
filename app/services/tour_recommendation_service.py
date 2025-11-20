@@ -548,7 +548,7 @@ class RouteOptimizer:
         routing.AddDimension(
             time_callback_index,
             0,  # Slack
-            self.max_time * 3,  # Max total time - increase để dễ tìm solution hơn
+            self.max_time,  # Max total time - increase để dễ tìm solution hơn
             True,  # Start cumul to zero
             'Time'
         )
