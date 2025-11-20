@@ -56,7 +56,7 @@ def register(
     }
 
 
-@router.post("/login", response_model=Token)
+@router.post("/login", response_model=dict)
 def login(
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_database)
@@ -66,16 +66,40 @@ def login(
         usename=form_data.username,
         password=form_data.password
     )
-    return AuthService.login(db, login_data)
+    token = AuthService.login(db, login_data)
+    
+    # Get user_id from account
+    account = db.query(Account).filter(Account.usename == form_data.username).first()
+    user = db.query(User).filter(User.id == account.user_id).first()
+    
+    return {
+        "access_token": token.access_token,
+        "token_type": token.token_type,
+        "user_id": user.id,
+        "username": account.usename,
+        "role": account.role
+    }
 
 
-@router.post("/login/json", response_model=Token)
+@router.post("/login/json", response_model=dict)
 def login_json(
     login_data: AccountLogin,
     db: Session = Depends(get_database)
 ):
     """Login with JSON body"""
-    return AuthService.login(db, login_data)
+    token = AuthService.login(db, login_data)
+    
+    # Get user_id from account
+    account = db.query(Account).filter(Account.usename == login_data.usename).first()
+    user = db.query(User).filter(User.id == account.user_id).first()
+    
+    return {
+        "access_token": token.access_token,
+        "token_type": token.token_type,
+        "user_id": user.id,
+        "username": account.usename,
+        "role": account.role
+    }
 
 
 @router.get("/me", response_model=dict)

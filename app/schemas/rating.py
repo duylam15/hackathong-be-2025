@@ -9,6 +9,7 @@ from datetime import datetime
 
 class RatingCreate(BaseModel):
     """Schema for creating a new rating"""
+    user_id: int = Field(..., gt=0, description="User ID who rates")
     destination_id: int = Field(..., gt=0, description="Destination ID to rate")
     rating: float = Field(..., ge=1.0, le=5.0, description="Rating value (1.0 - 5.0)")
     review_text: Optional[str] = Field(None, max_length=2000, description="Optional review text")
@@ -17,6 +18,7 @@ class RatingCreate(BaseModel):
     class Config:
         json_schema_extra = {
             "example": {
+                "user_id": 1,
                 "destination_id": 1,
                 "rating": 4.5,
                 "review_text": "Tuyệt vời! Kiến trúc đẹp và không gian yên tĩnh.",
@@ -53,12 +55,14 @@ class RatingResponse(BaseModel):
 
 class FavoriteCreate(BaseModel):
     """Schema for adding a favorite"""
+    user_id: int = Field(..., gt=0, description="User ID who favorites")
     destination_id: int = Field(..., gt=0, description="Destination ID to favorite")
     notes: Optional[str] = Field(None, max_length=500, description="Optional notes")
     
     class Config:
         json_schema_extra = {
             "example": {
+                "user_id": 1,
                 "destination_id": 5,
                 "notes": "Muốn đến đây vào mùa xuân"
             }
@@ -83,6 +87,7 @@ class FavoriteResponse(BaseModel):
 
 class VisitLogCreate(BaseModel):
     """Schema for logging a visit"""
+    user_id: int = Field(..., gt=0, description="User ID who visits")
     destination_id: int = Field(..., gt=0, description="Destination ID visited")
     visit_date: datetime = Field(..., description="Date and time of visit")
     duration_minutes: Optional[int] = Field(None, ge=0, description="Duration spent (minutes)")
@@ -91,6 +96,7 @@ class VisitLogCreate(BaseModel):
     class Config:
         json_schema_extra = {
             "example": {
+                "user_id": 1,
                 "destination_id": 3,
                 "visit_date": "2025-11-18T14:30:00",
                 "duration_minutes": 120,
@@ -119,6 +125,7 @@ class VisitLogResponse(BaseModel):
 
 class FeedbackCreate(BaseModel):
     """Schema for creating feedback"""
+    user_id: int = Field(..., gt=0, description="User ID who gives feedback")
     destination_id: int = Field(..., gt=0, description="Destination ID")
     action: str = Field(..., description="Action type: click, skip, save, share, view_details")
     context: Optional[dict] = Field(None, description="Additional context")
@@ -133,6 +140,7 @@ class FeedbackCreate(BaseModel):
     class Config:
         json_schema_extra = {
             "example": {
+                "user_id": 1,
                 "destination_id": 7,
                 "action": "click",
                 "context": {

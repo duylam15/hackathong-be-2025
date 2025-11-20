@@ -15,13 +15,14 @@ app = FastAPI(
     debug=settings.DEBUG
 )
 
-# Setup CORS - Allow all origins
+# Setup CORS - Allow all origins (for development)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins
+    allow_origins=["*"],  # Allow all origins in development
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, PUT, DELETE, etc.)
+    allow_headers=["*"],  # Allow all headers
+    expose_headers=["*"],  # Expose all response headers to frontend
 )
 
 # Include API routers
